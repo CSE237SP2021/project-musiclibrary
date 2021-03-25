@@ -12,7 +12,7 @@ class PlaylistTests {
 	@Test
 	void testAddSong() {
 		Playlist testPlaylist = new Playlist("My Playlist");
-		Song songToAdd = new Song("Test Title", "Test Arist", 3.45);
+		Song songToAdd = new Song("Test Title", "Test Arist", 120);
 		int numberOfSongsOnPlaylist = testPlaylist.numberOfSongs();
 		assertEquals(numberOfSongsOnPlaylist, 0);
 		testPlaylist.addSong(songToAdd);
