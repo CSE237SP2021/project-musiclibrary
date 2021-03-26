@@ -30,6 +30,9 @@ public class PlaylistHelper {
 		return playlistArray;
 	}
 
+	private void updatePlaylist(Playlist editedPlaylist, int index) {
+		playlistArray[index] = editedPlaylist; //TODO: fix
+	}
 	
 
 }
