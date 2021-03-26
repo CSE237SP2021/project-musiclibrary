@@ -66,6 +66,13 @@ public class MusicLibrary {
 			System.out.println("Which playlist would you like to edit?");
 			int indexToEdit = selectPlaylist();
 			Playlist playlistToEdit = playlistHelper.getPlaylist(indexToEdit);
+			
+			// Add song or whatever (Edit playlist menu)
+			// call a method from playlistHelper to put the edited 
+			// playlist in same index
+			// Ex. playlistHelper.updatePlaylist(playListToEdit,indexToEdit)
+			// add song to all songs playlists
+			
 			//playlistHelper.edit(indexToEdit); //assumes the editing menu & functionality is in edit();
 			runEditPlaylistMenu(playlistToEdit); //TODO: implement this
 			
