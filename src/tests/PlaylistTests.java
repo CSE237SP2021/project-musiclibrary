@@ -43,6 +43,20 @@ class PlaylistTests {
 		assertEquals(newDescription, playlistDescription);
 	}
 	
+	@Test
+	void testGetPlaytime() {
+		Playlist testPlaylist = new Playlist("My Playlist");
+		Song firstSong = new Song("First Title", "First Arist", 120);
+		Song secondSong = new Song("Second Title", "Second Artist", 312);
+		Song thirdSong = new Song("Third Title", "Third Artist", 245);
+		testPlaylist.addSong(firstSong);
+		testPlaylist.addSong(secondSong);
+		testPlaylist.addSong(thirdSong);
+		int playtime = testPlaylist.getPlaytime();
+		assertEquals(playtime, 677);
+		
+	}
+	
 	
 
 }
