@@ -9,10 +9,10 @@ public class PlaylistHelper {
 	public PlaylistHelper() {
 		playlistArray = new ArrayList<Playlist>();
 		
-		Playlist all = new Playlist();
+		Playlist all = new Playlist("all");
 		this.addPlaylist(all);
 		
-		Playlist favorites = new Playlist();
+		Playlist favorites = new Playlist("favorites");
 		this.addPlaylist(favorites);
 	}
 	

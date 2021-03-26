@@ -20,7 +20,7 @@ class PlaylistHelperTests {
 	@Test
 	void addPlaylistTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper(true);
-		Playlist newPlaylist = new Playlist();
+		Playlist newPlaylist = new Playlist("test");
 		playlistHelper.addPlaylist(newPlaylist);
 		
 	}
@@ -28,20 +28,18 @@ class PlaylistHelperTests {
 	@Test
 	void getPlaylistsTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
-		Playlist newPlaylist = new Playlist();
-		// NEED A WAY TO GET TITLE AND STUFF
+		Playlist newPlaylist = new Playlist("test");
 		playlistHelper.addPlaylist(newPlaylist);
-		
 		ArrayList<Playlist> playlists = playlistHelper.getAllPlaylists();
-		assertEquals(playlists.get(0).getTitle(),"all");
+		assertEquals(playlists.get(0).getName(),"all");
 	}
 	
 	// standard initalization with all and favorite playlist
 	@Test
-	void getPlaylistsTest() {
+	void buildPlaylistHelperStandardTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
 		ArrayList<Playlist> playlists = playlistHelper.getAllPlaylists();
-		assertEquals(playlists.get(0).getTitle(),"all");
-		assertEquals(playlists.get(0).getTitle(),"favorite");
+		assertEquals(playlists.get(0).getName(),"all");
+		assertEquals(playlists.get(1).getName(),"favorites");
 	}
 }
