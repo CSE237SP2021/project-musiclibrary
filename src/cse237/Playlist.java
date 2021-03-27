@@ -44,6 +44,14 @@ public class Playlist {
 				this.getPlaytime() + " seconds");
 	}
 	
+	public void displaySongs() {
+		for(int i = 0; i<songs.size(); i++) {
+			Song currentSong = songs.get(i);
+			//1. Test Song by GroupA <3 minutes 40 seconds>
+			System.out.println(i + ". " + currentSong.getTitle() + " by " + currentSong.getArtist() + " <" + currentSong.getFormattedLength() + ">");
+		}
+	}
+	
 	public String getName() {
 		return this.name;
 	}
