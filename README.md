@@ -40,7 +40,7 @@ User stories for the next iteration:
 7. User can have empty playlists
 8. User's bad input is tolerated, sanitized or re-prompted in a more rigorous way
 9. any suggestions from feedback
-10. User can find all songs that they added to any playlist in the "all" playlist (default playlist)
+
 
 Does everything Work?
 
