@@ -12,7 +12,7 @@ public class PlaylistHelper {
 		addDefaultPlaylists();
 	}
 	
-	// this is solely for the purpose of testing, as normal initialization has a dependency on adding playlists.
+	// this is solely for the purpose of testing, as normal initialization has a dependency on adding playlists
 	public PlaylistHelper(Boolean debug) {
 		playlistArray = new ArrayList<Playlist>();
 	}
