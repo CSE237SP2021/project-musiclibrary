@@ -9,7 +9,6 @@ public class MusicPlayer {
 
 	private Playlist nowPlaying;
 	private Song currentSong;
-	private int songTimeElapsed;
 	private int timeRemaining;
 	private int currentSongIndex;
 	private int playlistSize;
@@ -19,7 +18,6 @@ public class MusicPlayer {
 	public MusicPlayer(Playlist selected) {
 		this.nowPlaying = selected;
 		playlistSize = selected.numberOfSongs();
-		songTimeElapsed = 0;
 		songs = selected.getSongs();
 		
 		//by default, the current song is the first song in the playlist
@@ -27,6 +25,8 @@ public class MusicPlayer {
 		currentSongIndex = 0;
 		timeRemaining = 0;
 	}
+	
+	
 	
 	public void play(Playlist toPlay){
 		
@@ -38,12 +38,16 @@ public class MusicPlayer {
 			
 			playSongs();
 		}
-		
+		currentSongIndex = 0;
 	}
 	
 	
 	public void playSongs(){	
 		
+		int songTimeElapsed = 0;
+		
+		timeRemaining = currentSong.getLength() - songTimeElapsed;
+
 		while (songTimeElapsed < currentSong.getLength()) {
 			
 			//print a play statement every second for every second in the song
@@ -51,7 +55,7 @@ public class MusicPlayer {
 			//how much time there is remaining in the song
 			printNowPlaying();
 			songTimeElapsed++;
-			updateTimeRemaining();
+			updateTimeRemaining(songTimeElapsed);
 			//pause for 1 second
 			sleepOneSecond();
 		}
@@ -63,7 +67,7 @@ public class MusicPlayer {
 		
 	}
 	
-	public void updateTimeRemaining() {
+	public void updateTimeRemaining(int songTimeElapsed) {
 		timeRemaining = currentSong.getLength() - songTimeElapsed;
 	}
 	
@@ -85,7 +89,7 @@ public class MusicPlayer {
 		case "back":
 			break;
 		}
-}
+	}
 
 	public void sleepOneSecond(){
 	    try {
@@ -95,6 +99,12 @@ public class MusicPlayer {
 	
 	public void setPlaylist(Playlist toPlay) {
 		this.nowPlaying = toPlay;
+		this.playlistSize = toPlay.numberOfSongs();
+		this.songs = toPlay.getSongs();
+		currentSong = songs.get(0);
+		currentSongIndex = 0;
+		timeRemaining = 0;
 	}
+	
 	
 }
