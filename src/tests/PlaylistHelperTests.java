@@ -72,12 +72,12 @@ class PlaylistHelperTests {
 	}
 	
 	@Test
-	void updatePlaylistTest() {
+	void updatePlaylistHelperTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
 		Playlist oldPlaylist = new Playlist("Old List");
 		playlistHelper.addPlaylist(oldPlaylist);
 		Playlist newPlaylist = new Playlist("New List");
-		playlistHelper.updatePlaylist(newPlaylist, 2);
+		playlistHelper.updatePlaylistHelper(newPlaylist, 2);
 		Playlist PlayListAtIndexTwo = playlistHelper.getPlaylistAt(2);
 		assertEquals(PlayListAtIndexTwo.getName(), "New List");
 	}

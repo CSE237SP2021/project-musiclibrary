@@ -59,32 +59,14 @@ public class MusicLibrary {
 			break;
 			
 		case 2:
+			
 			System.out.println("Please select a playlist to play or edit.");
 			int indexToPlayOrEdit = selectPlaylist();
 			Playlist playlistToPlayOrEdit = playlistHelper.getPlaylistAt(indexToPlayOrEdit);
 			playlistToPlayOrEdit.toString();
 			playlistToPlayOrEdit.displaySongs();
 			
-			System.out.println("Please select an option: ");
-			System.out.println("1. Play");
-			System.out.println("2. Edit");
-			System.out.println("3. Back");
-			
-			int viewOption = this.getUserInput();
-			
-			switch(viewOption) {
-			case 1:
-				this.musicPlayer.setPlaylist(playlistToPlayOrEdit);
-				this.musicPlayer.play();
-				this.runMainMenu();
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			default:
-				break;
-			}
+			runViewMenu(playlistToPlayOrEdit, indexToPlayOrEdit);
 			
 			break;
 		case 3:
@@ -100,7 +82,108 @@ public class MusicLibrary {
 			break;
 		}
 	}
+
+	public void runViewMenu(Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+		
+		displayViewMenu();
+		int viewOption = this.getUserInput();
+		processViewMenu(viewOption, playlistToPlayOrEdit, indexToPlayOrEdit );
+		
+	}
 	
+	public void displayViewMenu() {
+		System.out.println("Please select an option: ");
+		System.out.println("1. Play");
+		System.out.println("2. Edit");
+		System.out.println("3. Back");
+	}
+
+	public void processViewMenu(int viewOption, Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+		
+		switch(viewOption) {
+		
+		case 1:
+			
+			this.musicPlayer.setPlaylist(playlistToPlayOrEdit);
+			this.musicPlayer.play();
+			
+			this.runMainMenu();
+			
+			break;
+			
+		case 2:
+			
+			runEditMenu(playlistToPlayOrEdit, indexToPlayOrEdit);
+			
+			break;
+		case 3:
+			break;
+		default:
+			System.out.println("Please input a valid option");
+			int nextInput = this.getUserInput();
+			processViewMenu(nextInput, playlistToPlayOrEdit, indexToPlayOrEdit);
+			break;
+		}
+		
+	}
+
+	public void runEditMenu(Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+		
+		displayEditMenu();
+		
+		int editOption = this.getUserInput();
+
+		processEditMenu(editOption, playlistToPlayOrEdit, indexToPlayOrEdit);
+	}
+
+	public void displayEditMenu() {
+		System.out.println("How would you like to edit?");
+		System.out.println("1. Add Song");
+		System.out.println("2. Back");
+	}
+	
+	public void processEditMenu(int editOption, Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+		
+		switch(editOption){
+		
+		case 1:
+			
+			Song songToAdd = getSongFromUser();
+			
+			playlistToPlayOrEdit.addSong(songToAdd);
+			this.playlistHelper.updatePlaylistHelper(playlistToPlayOrEdit, indexToPlayOrEdit);
+			break;
+			
+		case 2:
+			
+			runViewMenu(playlistToPlayOrEdit, indexToPlayOrEdit);
+			break;
+		
+		default:
+			System.out.println("Please input a valid option");
+			int nextInput = this.getUserInput();
+			processEditMenu(nextInput, playlistToPlayOrEdit, indexToPlayOrEdit);
+			break;
+		}
+		
+	}
+
+	public Song getSongFromUser() {
+		
+		System.out.println("Enter Song Title:");
+		String title = this.keyboardIn.nextLine();
+		
+		System.out.println("Enter Artist:");
+		String artist = this.keyboardIn.nextLine();
+		
+		System.out.println("Enter Song Length in Seconds: ");
+		int songLength = this.keyboardIn.nextInt();
+		
+		Song songToAdd = new Song(title, artist,songLength);
+		
+		return songToAdd;
+	}
+
 	private int selectPlaylist() {
 		playlistHelper.printAllPlaylists();
 		int playlistIndex = keyboardIn.nextInt();	
