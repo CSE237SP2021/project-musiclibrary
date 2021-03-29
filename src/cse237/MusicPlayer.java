@@ -28,7 +28,9 @@ public class MusicPlayer {
 		timeRemaining = 0;
 	}
 	
-	public void play(){
+	public void play(Playlist toPlay){
+		
+		this.setPlaylist(toPlay);
 		
 		for (int i = currentSongIndex; i < playlistSize; i++) {
 			currentSongIndex = i;

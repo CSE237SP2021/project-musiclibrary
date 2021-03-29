@@ -44,54 +44,57 @@ public class MusicLibrary {
 	}
 	
 	private void processMainMenu(int selectedOption) {
-		//TODO: Reorganize for better modularity
+		
 		switch(selectedOption) {
 		case 1:
 			
-			System.out.println("Which playlist would you like to play?");
-			int indexToPlay = selectPlaylist();
-			Playlist listToPlay = playlistHelper.getPlaylistAt(indexToPlay);
-			
-			musicPlayer.setPlaylist(listToPlay);
-			musicPlayer.play();
+			Playlist listToPlay = getPlaylistToPlayFromUser();
+			musicPlayer.play(listToPlay);
 			
 			runMainMenu();
+			
 			break;
 			
 		case 2:
 			
-			System.out.println("Please select a playlist to play or edit.");
-			int indexToPlayOrEdit = selectPlaylist();
-			Playlist playlistToPlayOrEdit = playlistHelper.getPlaylistAt(indexToPlayOrEdit);
-			playlistToPlayOrEdit.toString();
-			playlistToPlayOrEdit.displaySongs();
-			
-			runViewMenu(playlistToPlayOrEdit, indexToPlayOrEdit);
+			runViewMenu();
 			
 			break;
 		case 3:
+			
+			Playlist newPlaylist = getPlaylistToAddFromUser();
+			this.playlistHelper.addPlaylist(newPlaylist);
+			
 			runMainMenu();
 			break;
 		case 4:
 			System.out.println("Thank you for using Music Library");
 			break;
 		default:
-			System.out.println("Please input a valid option");
-			int nextInput = this.getUserInput();
+			int nextInput = getValidUserInput();
 			this.processMainMenu(nextInput);
 			break;
 		}
 	}
 
-	public void runViewMenu(Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+	public void runViewMenu() {
 		
-		displayViewMenu();
+		System.out.println("Please select a playlist to play or edit.");
+		int indexToPlayOrEdit = selectPlaylist();
+		
+		Playlist playlistToPlayOrEdit = playlistHelper.getPlaylistAt(indexToPlayOrEdit);
+		
+		displayViewMenu(playlistToPlayOrEdit);
+		
 		int viewOption = this.getUserInput();
 		processViewMenu(viewOption, playlistToPlayOrEdit, indexToPlayOrEdit );
 		
 	}
 	
-	public void displayViewMenu() {
+	public void displayViewMenu(Playlist playlistToDisplay) {
+		System.out.println("Current playlist: ");
+		playlistToDisplay.toString();
+		playlistToDisplay.displaySongs();
 		System.out.println("Please select an option: ");
 		System.out.println("1. Play");
 		System.out.println("2. Edit");
@@ -104,9 +107,7 @@ public class MusicLibrary {
 		
 		case 1:
 			
-			this.musicPlayer.setPlaylist(playlistToPlayOrEdit);
-			this.musicPlayer.play();
-			
+			this.musicPlayer.play(playlistToPlayOrEdit);
 			this.runMainMenu();
 			
 			break;
@@ -114,13 +115,15 @@ public class MusicLibrary {
 		case 2:
 			
 			runEditMenu(playlistToPlayOrEdit, indexToPlayOrEdit);
+			break;
 			
-			break;
 		case 3:
+			
+			this.runMainMenu();
 			break;
+			
 		default:
-			System.out.println("Please input a valid option");
-			int nextInput = this.getUserInput();
+			int nextInput = this.getValidUserInput();
 			processViewMenu(nextInput, playlistToPlayOrEdit, indexToPlayOrEdit);
 			break;
 		}
@@ -149,25 +152,47 @@ public class MusicLibrary {
 		case 1:
 			
 			Song songToAdd = getSongFromUser();
-			
 			playlistToPlayOrEdit.addSong(songToAdd);
 			this.playlistHelper.updatePlaylistHelper(playlistToPlayOrEdit, indexToPlayOrEdit);
+			
+			runMainMenu();
+			
 			break;
 			
 		case 2:
 			
-			runViewMenu(playlistToPlayOrEdit, indexToPlayOrEdit);
+			runViewMenu();
+			
 			break;
 		
 		default:
-			System.out.println("Please input a valid option");
-			int nextInput = this.getUserInput();
+			
+			int nextInput = this.getValidUserInput();
 			processEditMenu(nextInput, playlistToPlayOrEdit, indexToPlayOrEdit);
+			
 			break;
 		}
 		
 	}
 
+	
+
+	private int selectPlaylist() {
+		playlistHelper.printAllPlaylists();
+		int playlistIndex = keyboardIn.nextInt();	
+		return playlistIndex;
+	}
+	
+	private int getUserInput() {
+		return this.keyboardIn.nextInt();
+	}
+	
+	public int getValidUserInput() {
+		System.out.println("Please input a valid option");
+		int nextInput = this.getUserInput();
+		return nextInput;
+	}
+	
 	public Song getSongFromUser() {
 		
 		System.out.println("Enter Song Title:");
@@ -183,15 +208,19 @@ public class MusicLibrary {
 		
 		return songToAdd;
 	}
-
-	private int selectPlaylist() {
-		playlistHelper.printAllPlaylists();
-		int playlistIndex = keyboardIn.nextInt();	
-		return playlistIndex;
-	}
 	
-	private int getUserInput() {
-		return this.keyboardIn.nextInt();
+	public Playlist getPlaylistToAddFromUser() {
+		System.out.println("Please enter the name of the new playlist: ");
+		String newPlaylistName = this.keyboardIn.nextLine();
+		Playlist newPlaylist = new Playlist(newPlaylistName);
+		return newPlaylist;
+	}
+
+	public Playlist getPlaylistToPlayFromUser() {
+		System.out.println("Which playlist would you like to play?");
+		int indexToPlay = selectPlaylist();
+		Playlist listToPlay = playlistHelper.getPlaylistAt(indexToPlay);
+		return listToPlay;
 	}
 
 }
