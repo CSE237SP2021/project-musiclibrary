@@ -46,87 +46,88 @@ public class MusicLibrary {
 	private void processMainMenu(int selectedOption) {
 		
 		switch(selectedOption) {
-		case 1:
-			
-			Playlist listToPlay = getPlaylistToPlayFromUser();
-			musicPlayer.play(listToPlay);
-			
-			runMainMenu();
-			
+		
+		case 1:	
+			mainMenuPlay();
 			break;
 			
 		case 2:
-			
-			runViewMenu();
-			
+			mainMenuView();
 			break;
+			
 		case 3:
-			
-			Playlist newPlaylist = configureNewPlaylistToAdd();
-			
-			this.playlistHelper.addPlaylist(newPlaylist);
-			
-			runMainMenu();
+			mainMenuAddPlaylist();
 			break;
+			
 		case 4:
 			System.out.println("Thank you for using Music Library");
 			break;
+			
 		default:
 			int nextInput = getValidUserInput();
 			this.processMainMenu(nextInput);
 			break;
 		}
 	}
-
-	public Playlist configureNewPlaylistToAdd() {
-		
-		Playlist newPlaylist = getPlaylistToAddFromUser();
-		System.out.println("What is your first song in the new playlist?");
-		Song firstSong = this.getSongFromUser();
-		newPlaylist.addSong(firstSong);
-		
-		return newPlaylist;
+	
+	/**
+	 *Main Menu option 1: Prompts the user to select a playlist then play it.
+	 */
+	public void mainMenuPlay() {
+		Playlist listToPlay = getPlaylistToPlayFromUser();
+		musicPlayer.play(listToPlay);
+		runMainMenu();
 	}
 
-	public void runViewMenu() {
+	/**
+	 * Main Menu option 2: Allows user to choose a playlist and runs menu associated.
+	 */
+	public void mainMenuView() {
 		
-		System.out.println("Please select a playlist to play or edit.");
-		int indexToPlayOrEdit = selectPlaylist();
-		
-		Playlist playlistToPlayOrEdit = playlistHelper.getPlaylistAt(indexToPlayOrEdit);
-		
-		displayViewMenu(playlistToPlayOrEdit);
-		
-		int viewOption = this.getUserInput();
-		processViewMenu(viewOption, playlistToPlayOrEdit, indexToPlayOrEdit );
+		int indexToPlayOrEdit = getUserChoicePlaylistIndex();
+		runViewMenu(indexToPlayOrEdit);
 		
 	}
 	
-	public void displayViewMenu(Playlist playlistToDisplay) {
-		System.out.println("Current playlist: ");
-		playlistToDisplay.toString();
-		playlistToDisplay.displaySongs();
+	/**
+	 * Runs the view Menu according to selected playlist
+	 * @param indexToPlayOrEdit index of selected playlist
+	 */
+	public void runViewMenu(int indexToPlayOrEdit) {
+		displayViewMenu(indexToPlayOrEdit);	
+		int viewOption = this.getUserInput();
+		processViewMenu(viewOption, indexToPlayOrEdit);
+	}
+	
+	/**
+	 * Displays the chosen playlist and the menu associated.
+	 * @param playlistIndex The index of the chosen playlist
+	 */
+	public void displayViewMenu(int playlistIndex) {
+
+		Playlist playlistToDisplay = this.playlistHelper.getPlaylistAt(playlistIndex);
+		playlistToDisplay.displayPlaylistAndSongs();
+		
 		System.out.println("Please select an option: ");
 		System.out.println("1. Play");
 		System.out.println("2. Edit");
 		System.out.println("3. Back");
 	}
 
-	public void processViewMenu(int viewOption, Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+	public void processViewMenu(int viewOption, int indexToPlayOrEdit) {
 		
 		switch(viewOption) {
 		
 		case 1:
-			
-			this.musicPlayer.play(playlistToPlayOrEdit);
-			
+			Playlist listToPlay = this.playlistHelper.getPlaylistAt(indexToPlayOrEdit);
+			this.musicPlayer.play(listToPlay);
 			this.runMainMenu();
 			
 			break;
 			
 		case 2:
 			
-			runEditMenu(playlistToPlayOrEdit, indexToPlayOrEdit);
+			runEditMenu(indexToPlayOrEdit);
 			break;
 			
 		case 3:
@@ -136,19 +137,21 @@ public class MusicLibrary {
 			
 		default:
 			int nextInput = this.getValidUserInput();
-			processViewMenu(nextInput, playlistToPlayOrEdit, indexToPlayOrEdit);
+			processViewMenu(nextInput, indexToPlayOrEdit);
 			break;
 		}
 		
 	}
 
-	public void runEditMenu(Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+	/**
+	 * If the edit option is selected in the view menu, run the menu for editing
+	 * @param indexToPlayOrEdit the index of playlist selected for edit
+	 */
+	public void runEditMenu(int indexToPlayOrEdit) {
 		
 		displayEditMenu();
-		
 		int editOption = this.getUserInput();
-
-		processEditMenu(editOption, playlistToPlayOrEdit, indexToPlayOrEdit);
+		processEditMenu(editOption, indexToPlayOrEdit);
 	}
 
 	public void displayEditMenu() {
@@ -157,38 +160,77 @@ public class MusicLibrary {
 		System.out.println("2. Back");
 	}
 	
-	public void processEditMenu(int editOption, Playlist playlistToPlayOrEdit, int indexToPlayOrEdit) {
+	public void processEditMenu(int editOption, int indexToPlayOrEdit) {
 		
 		switch(editOption){
 		
 		case 1:
 			
-			Song songToAdd = getSongFromUser();
-			playlistToPlayOrEdit.addSong(songToAdd);
-			this.playlistHelper.updatePlaylistHelper(playlistToPlayOrEdit, indexToPlayOrEdit);
-			
+			editPlaylistAddSong(indexToPlayOrEdit);
 			runMainMenu();
 			
 			break;
 			
 		case 2:
 			
-			runViewMenu();
+			mainMenuView();
 			
 			break;
 		
 		default:
 			
 			int nextInput = this.getValidUserInput();
-			processEditMenu(nextInput, playlistToPlayOrEdit, indexToPlayOrEdit);
+			processEditMenu(nextInput, indexToPlayOrEdit);
 			
 			break;
 		}
 		
 	}
 
-	
+	/**
+	 * Get a song from a user, then add it to the program
+	 * @param indexOfPlaylistToAddSong
+	 */
+	public void editPlaylistAddSong(int indexOfPlaylistToAddSong) {
+		
+		Song songToAdd = getSongFromUser();
+		this.playlistHelper.addSongToPlaylistAtIndex(songToAdd, indexOfPlaylistToAddSong);
 
+	}
+
+	/**
+	 * Main Menu option 3: Adds a new user-made playlist to the program.
+	 */
+	public void mainMenuAddPlaylist() {
+		Playlist newPlaylist = configureNewPlaylistToAdd();
+		this.playlistHelper.addPlaylist(newPlaylist);
+		runMainMenu();
+	}
+
+	
+	/**
+	 * Prompt the user for the name of a new playlist and the first song in it
+	 * @return A new playlist with the first song added
+	 */
+	public Playlist configureNewPlaylistToAdd() {
+		
+		Playlist newPlaylist = getPlaylistToAddFromUser();
+		
+		System.out.println("What is your first song in the new playlist?");
+		Song firstSong = this.getSongFromUser();
+		
+		newPlaylist.addSong(firstSong);
+		
+		//update the "all" playlist to contain the new song
+		this.playlistHelper.addSongToDefaultPlaylist(firstSong);
+		
+		return newPlaylist;
+	}
+	
+	/**
+	 * Prints all the current playlists, and gets user input as playlist index
+	 * @return the index of playlist selected
+	 */
 	private int selectPlaylist() {
 		playlistHelper.printAllPlaylists();
 		int playlistIndex = keyboardIn.nextInt();
@@ -212,19 +254,32 @@ public class MusicLibrary {
 	
 	public Song getSongFromUser() {
 		
-		System.out.println("Enter Song Title:");
-		String title = this.keyboardIn.nextLine();
-		
-		System.out.println("Enter Artist:");
-		String artist = this.keyboardIn.nextLine();
-		
-		System.out.println("Enter Song Length in Seconds: ");
-		int songLength = this.keyboardIn.nextInt();
-		this.keyboardIn.nextLine();
+		String title = getSongTitleFromUser();
+		String artist = getSongArtistFromUser();
+		int songLength = getSongLengthInSecondsFromUser();
 		
 		Song songToAdd = new Song(title, artist,songLength);
 		
 		return songToAdd;
+	}
+
+	public int getSongLengthInSecondsFromUser() {
+		System.out.println("Enter Song Length in Seconds: ");
+		int songLength = this.keyboardIn.nextInt();
+		this.keyboardIn.nextLine();
+		return songLength;
+	}
+
+	public String getSongArtistFromUser() {
+		System.out.println("Enter Artist:");
+		String artist = this.keyboardIn.nextLine();
+		return artist;
+	}
+
+	public String getSongTitleFromUser() {
+		System.out.println("Enter Song Title:");
+		String title = this.keyboardIn.nextLine();
+		return title;
 	}
 	
 	public Playlist getPlaylistToAddFromUser() {
@@ -239,6 +294,12 @@ public class MusicLibrary {
 		int indexToPlay = selectPlaylist();
 		Playlist listToPlay = playlistHelper.getPlaylistAt(indexToPlay);
 		return listToPlay;
+	}
+	
+	public int getUserChoicePlaylistIndex() {
+		System.out.println("Please select a playlist to play or edit.");
+		int indexToPlayOrEdit = selectPlaylist();
+		return indexToPlayOrEdit;
 	}
 
 }

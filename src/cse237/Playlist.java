@@ -17,6 +17,40 @@ public class Playlist {
 		this.songs.add(songToBeAdded);
 	}
 	
+	/**
+	 * Prints the information summarizing the playlist in one line
+	 */
+	public String toString() {
+		//Name: MyPlaylist   Length: 12 songs 
+		//Playtime: 140 seconds
+		
+		if (description=="") {
+			return ("Name: " + this.name + "  Length: " + this.numberOfSongs()+ "songs  Playtime: " + this.getPlaytime() + " seconds");
+		}
+		//Name: MyPlaylist  Description: This is a playlist of my favorites songs  Length: 12 songs  Playtime: 140 seconds
+		return ("Name: " + this.name + "  Description " + this.description + "  Length: " + this.numberOfSongs()+ " songs  Playtime: " + 
+				this.getPlaytime() + " seconds");
+	}
+	/**
+	 * Prints a list of all the songs in the playlist
+	 */
+	public void displaySongs() {
+		for(int i = 0; i<songs.size(); i++) {
+			Song currentSong = songs.get(i);
+			//1. Test Song by GroupA <3 minutes 40 seconds>
+			System.out.println(i + ". " + currentSong.getTitle() + " by " + currentSong.getArtist() + " <" + currentSong.getFormattedLength() + ">");
+		}
+	}
+	
+	/**
+	 * toString() and displaySongs in one method
+	 */
+	public void displayPlaylistAndSongs() {
+		System.out.println("Currently: ");
+		this.toString();
+		this.displaySongs();
+	}
+	
 	public int numberOfSongs() {
 		return this.songs.size();
 	}
@@ -34,25 +68,6 @@ public class Playlist {
 		return playtime;
 	}
 	
-	public String toString() {
-		//Name: MyPlaylist   Length: 12 songs 
-		//Playtime: 140 seconds
-		
-		if (description=="") {
-			return ("Name: " + this.name + "  Length: " + this.numberOfSongs()+ "songs  Playtime: " + this.getPlaytime() + " seconds");
-		}
-		//Name: MyPlaylist  Description: This is a playlist of my favorites songs  Length: 12 songs  Playtime: 140 seconds
-		return ("Name: " + this.name + "  Description " + this.description + "  Length: " + this.numberOfSongs()+ " songs  Playtime: " + 
-				this.getPlaytime() + " seconds");
-	}
-	
-	public void displaySongs() {
-		for(int i = 0; i<songs.size(); i++) {
-			Song currentSong = songs.get(i);
-			//1. Test Song by GroupA <3 minutes 40 seconds>
-			System.out.println(i + ". " + currentSong.getTitle() + " by " + currentSong.getArtist() + " <" + currentSong.getFormattedLength() + ">");
-		}
-	}
 	
 	public String getName() {
 		return this.name;
