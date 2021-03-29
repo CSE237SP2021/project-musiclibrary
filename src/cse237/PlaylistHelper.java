@@ -38,8 +38,8 @@ public class PlaylistHelper {
 	}
 
 	
-	private void updatePlaylist(Playlist editedPlaylist, int index) {
-		playlistArray[index] = editedPlaylist; //TODO: fix
+	public void updatePlaylist(Playlist editedPlaylist, int index) {
+		playlistArray.set(index, editedPlaylist);
 	}
 	
 
