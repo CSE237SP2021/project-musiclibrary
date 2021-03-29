@@ -38,7 +38,7 @@ public class PlaylistHelper {
         }
 	}
 	
-	public void updatePlaylist(Playlist editedPlaylist, int index) {
+	public void updatePlaylistHelper(Playlist editedPlaylist, int index) {
 		playlistArray.set(index, editedPlaylist);
 	}
 	
