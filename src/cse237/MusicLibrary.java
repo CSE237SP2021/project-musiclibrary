@@ -4,21 +4,26 @@ import java.util.Scanner;
 
 public class MusicLibrary {
 	
-	//TODO: write the PlaylistHelper & MusicPlayer class
 	private Scanner keyboardIn;
 	private PlaylistHelper playlistHelper;
 	private MusicPlayer musicPlayer;
 	
 	public MusicLibrary() {
+		
 		this.keyboardIn = new Scanner(System.in);
 		this.playlistHelper = new PlaylistHelper();
-		this.musicPlayer = new MusicPlayer();
+		Playlist allSongsPlaylist = playlistHelper.getDefaultPlaylist();
+		this.musicPlayer = new MusicPlayer(allSongsPlaylist);
+		
 	}
 
 	public static void main(String[] args) {
 		
+		System.out.println("Welcome to Music Library!");
+		
 		MusicLibrary musicLibrary = new MusicLibrary(); 
 		musicLibrary.runMenu();
+		
 	}
 	
 	
@@ -29,7 +34,7 @@ public class MusicLibrary {
 	}
 	
 	private void displayMainMenu() {
-		System.out.println("Welcome to Music Library!");
+		System.out.println("---Main Menu---");
 		playlistHelper.showPlaylists();
 			/*
 			 * Current Playlists:
