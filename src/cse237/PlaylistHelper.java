@@ -7,8 +7,8 @@ public class PlaylistHelper {
 	ArrayList<Playlist> playlistArray;
 	
 	public PlaylistHelper() {
-		playlistArray = new ArrayList<Playlist>();
 		
+		playlistArray = new ArrayList<Playlist>();
 		addDefaultPlaylists();
 	}
 	
@@ -21,6 +21,9 @@ public class PlaylistHelper {
 		playlistArray.add(newPlaylist);
 	}
 	
+	/**
+	 * The program has two default playslists: one with all the songs, one with the "favorite" songs
+	 */
 	public void addDefaultPlaylists() {
 		Playlist all = new Playlist("all");
 		Song welcome = new Song("Welcome!", "Librarians", 3);
@@ -44,6 +47,31 @@ public class PlaylistHelper {
             System.out.println(i+": "+playlistAtIndex.getName());
             
         }
+	}
+	
+	/**
+	 * Add a song to one of the playlists, and update the default "all" playlist
+	 * @param songToAdd
+	 * @param playlistIndex
+	 */
+	public void addSongToPlaylistAtIndex(Song songToAdd, int playlistIndex) {
+		
+		Playlist playlistToEdit = this.getPlaylistAt(playlistIndex);
+		playlistToEdit.addSong(songToAdd);
+		this.updatePlaylistHelper(playlistToEdit, playlistIndex);
+		
+		if (playlistIndex > 0) {
+			
+			addSongToDefaultPlaylist(songToAdd);
+		}
+	}
+
+	public void addSongToDefaultPlaylist(Song songToAdd) {
+		
+		Playlist newAllPlaylist = this.getDefaultPlaylist();
+		newAllPlaylist.addSong(songToAdd);
+		this.updatePlaylistHelper(newAllPlaylist, 0);
+		
 	}
 	
 	public void updatePlaylistHelper(Playlist editedPlaylist, int index) {

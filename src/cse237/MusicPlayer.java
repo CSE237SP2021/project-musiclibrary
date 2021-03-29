@@ -26,7 +26,10 @@ public class MusicPlayer {
 	}
 	
 	
-	
+	/**
+	 * Iterates through the Songs in the toPlay Playlist, and plays them
+	 * @param toPlay
+	 */
 	public void play(Playlist toPlay){
 		
 		this.setPlaylist(toPlay);
@@ -40,7 +43,9 @@ public class MusicPlayer {
 		currentSongIndex = 0;
 	}
 	
-	
+	/**
+	 * Method for playing the current Song : Emulates playing music by printing while tracking time of songs.
+	 */
 	public void playSongs(){	
 		
 		int songTimeElapsed = 0;
@@ -60,6 +65,7 @@ public class MusicPlayer {
 		}
 	}
 	
+	
 	public void printNowPlaying() {
 		System.out.println("Now playing: " + currentSong.getTitle() + " by " + currentSong.getArtist()+ ". There are " +
 				timeRemaining + " seconds remaining." );
@@ -70,6 +76,7 @@ public class MusicPlayer {
 		timeRemaining = currentSong.getLength() - songTimeElapsed;
 	}
 	
+	//Not Finished - will try to implement if Iteration2
 	private void processPlayerMenu(String selectedOption) {
 		
 		//TODO: add functionality to music player
