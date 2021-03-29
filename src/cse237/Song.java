@@ -3,17 +3,17 @@ package cse237;
 public class Song {
 	private String title;
 	private String artist;
-	private int length;
+	private int lengthInSeconds;
 	
-	public Song(String title, String artist, int length) {
+	public Song(String title, String artist, int lengthInSeconds) {
 		this.title = title;
 		this.artist = artist;
-		this.length = length;
+		this.lengthInSeconds = lengthInSeconds;
 	}
 	
 	public String getFormattedLength() {
-		int minutes = length/60;
-		int seconds = length%60;
+		int minutes = lengthInSeconds/60;
+		int seconds = lengthInSeconds%60;
 		return minutes + " minutes " + seconds + " seconds";
 	}
 	
@@ -26,6 +26,6 @@ public class Song {
 	}
 	
 	public int getLength() {
-		return this.length;
+		return this.lengthInSeconds;
 	}
 }
