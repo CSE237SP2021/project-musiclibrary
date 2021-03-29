@@ -9,20 +9,28 @@ public class PlaylistHelper {
 	public PlaylistHelper() {
 		playlistArray = new ArrayList<Playlist>();
 		
-		Playlist all = new Playlist("all");
-		this.addPlaylist(all);
-		
-		Playlist favorites = new Playlist("favorites");
-		this.addPlaylist(favorites);
+		addDefaultPlaylists();
 	}
 	
-	// this is solely for the purpose of testing, as normal initalization has a dependency on adding playlists
+	// this is solely for the purpose of testing, as normal initialization has a dependency on adding playlists.
 	public PlaylistHelper(Boolean debug) {
 		playlistArray = new ArrayList<Playlist>();
 	}
 	
 	public void addPlaylist(Playlist newPlaylist) {
 		playlistArray.add(newPlaylist);
+	}
+	
+	public void addDefaultPlaylists() {
+		Playlist all = new Playlist("all");
+		Song welcome = new Song("Welcome!", "Librarians", 3);
+		all.addSong(welcome);
+		this.addPlaylist(all);
+		
+		Playlist favorites = new Playlist("favorites");
+		Song myFav = new Song("myFavSong", "Me", 3);
+		favorites.addSong(myFav);
+		this.addPlaylist(favorites);
 	}
 
 	// no test cases due to it being print style

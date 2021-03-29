@@ -62,7 +62,8 @@ public class MusicLibrary {
 			break;
 		case 3:
 			
-			Playlist newPlaylist = getPlaylistToAddFromUser();
+			Playlist newPlaylist = configureNewPlaylistToAdd();
+			
 			this.playlistHelper.addPlaylist(newPlaylist);
 			
 			runMainMenu();
@@ -75,6 +76,16 @@ public class MusicLibrary {
 			this.processMainMenu(nextInput);
 			break;
 		}
+	}
+
+	public Playlist configureNewPlaylistToAdd() {
+		
+		Playlist newPlaylist = getPlaylistToAddFromUser();
+		System.out.println("What is your first song in the new playlist?");
+		Song firstSong = this.getSongFromUser();
+		newPlaylist.addSong(firstSong);
+		
+		return newPlaylist;
 	}
 
 	public void runViewMenu() {
@@ -108,6 +119,7 @@ public class MusicLibrary {
 		case 1:
 			
 			this.musicPlayer.play(playlistToPlayOrEdit);
+			
 			this.runMainMenu();
 			
 			break;
@@ -179,12 +191,17 @@ public class MusicLibrary {
 
 	private int selectPlaylist() {
 		playlistHelper.printAllPlaylists();
-		int playlistIndex = keyboardIn.nextInt();	
+		int playlistIndex = keyboardIn.nextInt();
+		this.keyboardIn.nextLine();
 		return playlistIndex;
 	}
 	
 	private int getUserInput() {
-		return this.keyboardIn.nextInt();
+
+		int input = this.keyboardIn.nextInt();
+		this.keyboardIn.nextLine();
+		return input;
+
 	}
 	
 	public int getValidUserInput() {
@@ -203,6 +220,7 @@ public class MusicLibrary {
 		
 		System.out.println("Enter Song Length in Seconds: ");
 		int songLength = this.keyboardIn.nextInt();
+		this.keyboardIn.nextLine();
 		
 		Song songToAdd = new Song(title, artist,songLength);
 		
