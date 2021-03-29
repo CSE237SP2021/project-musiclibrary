@@ -3,8 +3,8 @@ package cse237;
 import java.util.ArrayList;
 
 public class PlaylistHelper {
-	ArrayList<Playlist> playlistArray;
 	
+	ArrayList<Playlist> playlistArray;
 	
 	public PlaylistHelper() {
 		playlistArray = new ArrayList<Playlist>();
@@ -25,10 +25,6 @@ public class PlaylistHelper {
 		playlistArray.add(newPlaylist);
 		
 	}
-	
-	public ArrayList<Playlist> getAllPlaylists() {
-		return playlistArray;
-	}
 
 	// no test cases due to it being print style
 	public void printAllPlaylists() {
@@ -36,11 +32,17 @@ public class PlaylistHelper {
             System.out.println(i+": "+playlistArray.get(i));
         }
 	}
-
 	
 	public void updatePlaylist(Playlist editedPlaylist, int index) {
 		playlistArray.set(index, editedPlaylist);
 	}
 	
+	public ArrayList<Playlist> getAllPlaylists() {
+		return playlistArray;
+	}
 
+	public Playlist getDefaultPlaylist() {
+		return playlistArray.get(0);
+	}
+	
 }

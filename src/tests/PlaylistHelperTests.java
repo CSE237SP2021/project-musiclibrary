@@ -42,4 +42,11 @@ class PlaylistHelperTests {
 		assertEquals(playlists.get(0).getName(),"all");
 		assertEquals(playlists.get(1).getName(),"favorites");
 	}
+	
+	@Test
+	void getDefaultPlaylistTest() {
+		PlaylistHelper playlistHelper = new PlaylistHelper();
+		Playlist allSongs  = playlistHelper.getDefaultPlaylist();
+		assertEquals(playlistHelper.getAllPlaylists().get(0), allSongs);
+	}
 }
