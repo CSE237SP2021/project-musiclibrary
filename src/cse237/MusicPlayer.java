@@ -46,7 +46,7 @@ public class MusicPlayer {
 			
 			//print a play statement every second for every second in the song
 			//then update how much of the song has been listened to, as well as
-			//how much time there is remaining in the song.
+			//how much time there is remaining in the song
 			printNowPlaying();
 			songTimeElapsed++;
 			updateTimeRemaining();

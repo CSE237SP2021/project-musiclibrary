@@ -35,7 +35,9 @@ public class Playlist {
 	}
 	
 	public String toString() {
-		//Name: MyPlaylist   Length: 12 songs  Playtime: 140 seconds
+		//Name: MyPlaylist   Length: 12 songs 
+		//Playtime: 140 seconds
+		
 		if (description=="") {
 			return ("Name: " + this.name + "  Length: " + this.numberOfSongs()+ "songs  Playtime: " + this.getPlaytime() + " seconds");
 		}
