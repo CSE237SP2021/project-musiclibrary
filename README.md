@@ -20,6 +20,11 @@ We built a Song object, Playlist object, MusicLibrary object, and PlaylistHelper
 User Stories We Intend to Complete (next iteration):
 - refactor code so that methods are clean
 - comment code
+- user should be able to choose options to delete song
+- build music player input handling
+- user should be able tos shuffle a playlist
+- user should be able to see a list of available playlists
+- a user should be able to favorite a song
 
 Is everything working?
 
