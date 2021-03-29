@@ -23,13 +23,18 @@ public class PlaylistHelper {
 	
 	public void addPlaylist(Playlist newPlaylist) {
 		playlistArray.add(newPlaylist);
-		
 	}
 
 	// no test cases due to it being print style
 	public void printAllPlaylists() {
+		
+		System.out.println("Current Playlists: ");
+		
 		for (int i = 0; i < playlistArray.size(); i++) {
-            System.out.println(i+": "+playlistArray.get(i));
+			
+			Playlist playlistAtIndex = playlistArray.get(i);
+            System.out.println(i+": "+playlistAtIndex.getName());
+            
         }
 	}
 	
@@ -43,6 +48,14 @@ public class PlaylistHelper {
 
 	public Playlist getDefaultPlaylist() {
 		return playlistArray.get(0);
+	}
+	
+	public Playlist getPlaylistAt(int index) {
+		return playlistArray.get(index);
+	}
+	
+	public int getNumberOfPlaylists() {
+		return playlistArray.size();
 	}
 	
 }

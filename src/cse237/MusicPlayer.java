@@ -57,8 +57,7 @@ public class MusicPlayer {
 	
 	public void printNowPlaying() {
 		System.out.println("Now playing: " + currentSong.getTitle() + " by " + currentSong.getArtist()+ ". There are " +
-				timeRemaining + " seconds remaining. Input 'pause' to pause the current song, , or 'back' to navigate back"
-						+ " to the main menu.");
+				timeRemaining + " seconds remaining." );
 		
 	}
 	
@@ -68,7 +67,7 @@ public class MusicPlayer {
 	
 	private void processPlayerMenu(String selectedOption) {
 		
-		//TO-DO
+		//TODO: add functionality to music player
 		
 		switch(selectedOption) {
 		
@@ -90,6 +89,10 @@ public class MusicPlayer {
 	    try {
 	        Thread.sleep(1000);
 	    } catch (InterruptedException e) {}
+	}
+	
+	public void setPlaylist(Playlist toPlay) {
+		this.nowPlaying = toPlay;
 	}
 	
 }

@@ -35,21 +35,13 @@ public class MusicLibrary {
 	
 	private void displayMainMenu() {
 		System.out.println("---Main Menu---");
-		playlistHelper.showPlaylists();
-			/*
-			 * Current Playlists:
-			 * 0. All Songs 
-			 * 1. Favorites
-			 * 2. <custom playlist name here>
-			 * ...
-			 */
+		playlistHelper.printAllPlaylists();
 		System.out.println("Please select an option: ");
 		System.out.println("1. Play an existing playlist");
-		System.out.println("2. Edit an existing playlist");
+		System.out.println("2. View an existing playlist to Play or Edit");
 		System.out.println("3. Delete an existing playlist");
 		System.out.println("4. Add a new playlist");
 		System.out.println("5. Quit Music Library");
-		
 	}
 	
 	private void processMainMenu(int selectedOption) {
@@ -59,27 +51,25 @@ public class MusicLibrary {
 			
 			System.out.println("Which playlist would you like to play?");
 			int indexToPlay = selectPlaylist();
-			Playlist listToPlay = playlistHelper.getPlaylist(indexToPlay);
+			Playlist listToPlay = playlistHelper.getPlaylistAt(indexToPlay);
 			musicPlayer.setPlaylist(listToPlay);
-			//musicPlayer.play(); //assumes shuffle/loop/normal option is asked in play();
-			
-			runPlayMenu(); //TODO: display menu (show modes), process option, run following:
-						   //musicPlayer.setMode(shuffle); musicPlayer.play();
+			musicPlayer.play();
 			runMenu();
 			break;
+			
 		case 2:
-			System.out.println("Which playlist would you like to edit?");
+			System.out.println("Please select a playlist to view or edit.");
 			int indexToEdit = selectPlaylist();
-			Playlist playlistToEdit = playlistHelper.getPlaylist(indexToEdit);
+			Playlist playlistToEdit = playlistHelper.getPlaylistAt(indexToEdit);
 			
 			// Add song or whatever (Edit playlist menu)
 			// call a method from playlistHelper to put the edited 
 			// playlist in same index
-			// Ex. playlistHelper.updatePlaylist(playListToEdit,indexToEdit)
+			//playlistHelper.updatePlaylist(playListToEdit,indexToEdit)
 			// add song to all songs playlists
 			
-			//playlistHelper.edit(indexToEdit); //assumes the editing menu & functionality is in edit();
-			runEditPlaylistMenu(playlistToEdit); //TODO: implement this
+			playlistHelper.edit(indexToEdit); //assumes the editing menu & functionality is in edit();
+			//runEditPlaylistMenu(playlistToEdit); //TODO: implement this
 			
 			runMenu();
 			break;
@@ -105,7 +95,7 @@ public class MusicLibrary {
 	}
 	
 	private int selectPlaylist() {
-		playlistHelper.showPlaylists();
+		playlistHelper.printAllPlaylists();
 		int playlistIndex = keyboardIn.nextInt();	
 		return playlistIndex;
 	}
