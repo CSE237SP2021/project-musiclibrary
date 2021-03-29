@@ -59,4 +59,8 @@ public class Playlist {
 	public String getDescription() {
 		return this.description;
 	}
+	
+	public ArrayList<Song> getSongs(){
+		return this.songs;
+	}
 }
