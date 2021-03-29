@@ -47,7 +47,7 @@ public class MusicLibrary {
 		
 		switch(selectedOption) {
 		
-		case 1:	
+		case 1:	 
 			mainMenuPlay();
 			break;
 			
