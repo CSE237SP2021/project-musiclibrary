@@ -1,6 +1,6 @@
 #!/bin/bash
 
-java src/cse237/*.java
+javac src/cse237/*.java
 
-javac -cp src cse237.MusicLibrary
+java -cp src cse237.MusicLibrary
 
