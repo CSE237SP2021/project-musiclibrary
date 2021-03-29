@@ -44,6 +44,15 @@ class PlaylistHelperTests {
 	}
 	
 	@Test
+	void updatePlaylistTest() {
+		PlaylistHelper playlistHelper = new PlaylistHelper();
+		Playlist oldPlaylist = new Playlist("Old List");
+		playlistHelper.addPlaylist(oldPlaylist);
+		Playlist newPlaylist = new Playlist("New List");
+		playlistHelper.updatePlaylist(newPlaylist, 2);
+	}
+	
+	@Test
 	void getDefaultPlaylistTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
 		Playlist allSongs  = playlistHelper.getDefaultPlaylist();
