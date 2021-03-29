@@ -22,12 +22,12 @@ public class MusicLibrary {
 		System.out.println("Welcome to Music Library!");
 		
 		MusicLibrary musicLibrary = new MusicLibrary(); 
-		musicLibrary.runMenu();
+		musicLibrary.runMainMenu();
 		
 	}
 	
 	
-	private void runMenu() {
+	private void runMainMenu() {
 		displayMainMenu();
 		int selectedOption = this.getUserInput();
 		processMainMenu(selectedOption);
@@ -39,9 +39,8 @@ public class MusicLibrary {
 		System.out.println("Please select an option: ");
 		System.out.println("1. Play an existing playlist");
 		System.out.println("2. View an existing playlist to Play or Edit");
-		System.out.println("3. Delete an existing playlist");
-		System.out.println("4. Add a new playlist");
-		System.out.println("5. Quit Music Library");
+		System.out.println("3. Add a new playlist");
+		System.out.println("4. Quit Music Library");
 	}
 	
 	private void processMainMenu(int selectedOption) {
@@ -52,38 +51,46 @@ public class MusicLibrary {
 			System.out.println("Which playlist would you like to play?");
 			int indexToPlay = selectPlaylist();
 			Playlist listToPlay = playlistHelper.getPlaylistAt(indexToPlay);
+			
 			musicPlayer.setPlaylist(listToPlay);
 			musicPlayer.play();
-			runMenu();
+			
+			runMainMenu();
 			break;
 			
 		case 2:
-			System.out.println("Please select a playlist to view or edit.");
-			int indexToEdit = selectPlaylist();
-			Playlist playlistToEdit = playlistHelper.getPlaylistAt(indexToEdit);
+			System.out.println("Please select a playlist to play or edit.");
+			int indexToPlayOrEdit = selectPlaylist();
+			Playlist playlistToPlayOrEdit = playlistHelper.getPlaylistAt(indexToPlayOrEdit);
+			playlistToPlayOrEdit.toString();
+			playlistToPlayOrEdit.displaySongs();
 			
-			// Add song or whatever (Edit playlist menu)
-			// call a method from playlistHelper to put the edited 
-			// playlist in same index
-			//playlistHelper.updatePlaylist(playListToEdit,indexToEdit)
-			// add song to all songs playlists
+			System.out.println("Please select an option: ");
+			System.out.println("1. Play");
+			System.out.println("2. Edit");
+			System.out.println("3. Back");
 			
-			playlistHelper.edit(indexToEdit); //assumes the editing menu & functionality is in edit();
-			//runEditPlaylistMenu(playlistToEdit); //TODO: implement this
+			int viewOption = this.getUserInput();
 			
-			runMenu();
+			switch(viewOption) {
+			case 1:
+				this.musicPlayer.setPlaylist(playlistToPlayOrEdit);
+				this.musicPlayer.play();
+				this.runMainMenu();
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+				break;
+			}
+			
 			break;
 		case 3:
-			System.out.println("Which playlist would you like to delete?");
-			int indexToDelete = selectPlaylist();
-			playlistHelper.delete(indexToDelete); // delete() shouldn't delete All Songs or Favorites
-			runMenu();
+			runMainMenu();
 			break;
 		case 4:
-			playlistHelper.addNewPlaylist();
-			runMenu();
-			break;
-		case 5:
 			System.out.println("Thank you for using Music Library");
 			break;
 		default:
