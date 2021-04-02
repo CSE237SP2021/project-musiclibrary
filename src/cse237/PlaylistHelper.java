@@ -26,13 +26,9 @@ public class PlaylistHelper {
 	 */
 	public void addDefaultPlaylists() {
 		Playlist all = new Playlist("all");
-		Song welcome = new Song("Welcome!", "Librarians", 3);
-		all.addSong(welcome);
 		this.addPlaylist(all);
 		
 		Playlist favorites = new Playlist("favorites");
-		Song myFav = new Song("myFavSong", "Me", 3);
-		favorites.addSong(myFav);
 		this.addPlaylist(favorites);
 	}
 
@@ -62,13 +58,13 @@ public class PlaylistHelper {
 		
 		if (playlistIndex > 0) {
 			
-			addSongToDefaultPlaylist(songToAdd);
+			addSongToAllSongsPlaylist(songToAdd);
 		}
 	}
 
-	public void addSongToDefaultPlaylist(Song songToAdd) {
+	public void addSongToAllSongsPlaylist(Song songToAdd) {
 		
-		Playlist newAllPlaylist = this.getDefaultPlaylist();
+		Playlist newAllPlaylist = this.getAllSongsPlaylist();
 		newAllPlaylist.addSong(songToAdd);
 		this.updatePlaylistHelper(newAllPlaylist, 0);
 		
@@ -82,7 +78,7 @@ public class PlaylistHelper {
 		return playlistArray;
 	}
 
-	public Playlist getDefaultPlaylist() {
+	public Playlist getAllSongsPlaylist() {
 		return playlistArray.get(0);
 	}
 	

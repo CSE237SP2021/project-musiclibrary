@@ -6,23 +6,16 @@ import java.util.Scanner;
 
 public class MusicPlayer {
 
-	private Playlist nowPlaying;
+	private Playlist currentPlaylist;
 	private Song currentSong;
 	private int timeRemaining;
 	private int currentSongIndex;
 	private int playlistSize;
-	ArrayList<Song> songs;
+	private ArrayList<Song> songs;
 
 	
-	public MusicPlayer(Playlist selected) {
-		this.nowPlaying = selected;
-		playlistSize = selected.numberOfSongs();
-		songs = selected.getSongs();
-		
-		//by default, the current song is the first song in the playlist
-		currentSong = songs.get(0);
-		currentSongIndex = 0;
-		timeRemaining = 0;
+	public MusicPlayer() {
+
 	}
 	
 	
@@ -30,7 +23,7 @@ public class MusicPlayer {
 	 * Iterates through the Songs in the toPlay Playlist, and plays them
 	 * @param toPlay
 	 */
-	public void play(Playlist toPlay){
+	public void playPlaylist(Playlist toPlay){
 		
 		this.setPlaylist(toPlay);
 		
@@ -104,7 +97,7 @@ public class MusicPlayer {
 	}
 	
 	public void setPlaylist(Playlist toPlay) {
-		this.nowPlaying = toPlay;
+		this.currentPlaylist = toPlay;
 		this.playlistSize = toPlay.numberOfSongs();
 		this.songs = toPlay.getSongs();
 		currentSong = songs.get(0);
