@@ -12,8 +12,7 @@ public class MusicLibrary {
 		
 		this.keyboardIn = new Scanner(System.in);
 		this.playlistHelper = new PlaylistHelper();
-		Playlist allSongsPlaylist = playlistHelper.getDefaultPlaylist();
-		this.musicPlayer = new MusicPlayer(allSongsPlaylist);
+		this.musicPlayer = new MusicPlayer();
 		
 	}
 
@@ -75,7 +74,7 @@ public class MusicLibrary {
 	 */
 	public void mainMenuPlay() {
 		Playlist listToPlay = getPlaylistToPlayFromUser();
-		musicPlayer.play(listToPlay);
+		musicPlayer.playPlaylist(listToPlay);
 		runMainMenu();
 	}
 
@@ -120,7 +119,7 @@ public class MusicLibrary {
 		
 		case 1:
 			Playlist listToPlay = this.playlistHelper.getPlaylistAt(indexToPlayOrEdit);
-			this.musicPlayer.play(listToPlay);
+			this.musicPlayer.playPlaylist(listToPlay);
 			this.runMainMenu();
 			
 			break;
@@ -222,7 +221,7 @@ public class MusicLibrary {
 		newPlaylist.addSong(firstSong);
 		
 		//update the "all" playlist to contain the new song
-		this.playlistHelper.addSongToDefaultPlaylist(firstSong);
+		this.playlistHelper.addSongToAllSongsPlaylist(firstSong);
 		
 		return newPlaylist;
 	}
