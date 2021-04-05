@@ -62,4 +62,13 @@ class MusicPlayerTests {
 		// counting down
 		// then the same for Now playing: Bismark Coffee by Brigham Young. There are 2 seconds remaining.
 	}
+	
+	@Test 
+	void testPlayEmptyPlaylist() {
+		Playlist testPlaylist = new Playlist("testPlaylist");
+		
+		MusicPlayer player = new MusicPlayer();
+		player.playPlaylist(testPlaylist);
+		// should display: No songs in playlist to play
+	}
 }

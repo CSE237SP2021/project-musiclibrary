@@ -27,6 +27,11 @@ public class MusicPlayer {
 		
 		this.setPlaylist(toPlay);
 		
+		if(playlistSize == 0) {
+			System.out.println("No songs in playlist to play");
+			return;
+		}
+		
 		for (int i = currentSongIndex; i < playlistSize; i++) {
 			currentSongIndex = i;
 			currentSong = songs.get(i);
@@ -100,7 +105,13 @@ public class MusicPlayer {
 		this.currentPlaylist = toPlay;
 		this.playlistSize = toPlay.numberOfSongs();
 		this.songs = toPlay.getSongs();
-		currentSong = songs.get(0);
+		try {
+			currentSong = songs.get(0);
+		}
+		catch(Exception e){ // for case where no songs
+			currentSong = null;
+		}
+			
 		currentSongIndex = 0;
 		timeRemaining = 0;
 	}
