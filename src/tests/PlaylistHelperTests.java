@@ -83,9 +83,9 @@ class PlaylistHelperTests {
 	}
 	
 	@Test
-	void getDefaultPlaylistTest() {
+	void getAllSongsPlaylistTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
-		Playlist allSongs  = playlistHelper.getDefaultPlaylist();
+		Playlist allSongs  = playlistHelper.getAllSongsPlaylist();
 		ArrayList<Playlist> playlists = playlistHelper.getAllPlaylists();
 		assertEquals(playlists.get(0), allSongs);
 	}
