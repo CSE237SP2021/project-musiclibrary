@@ -57,6 +57,17 @@ class PlaylistTests {
 		
 	}
 	
-	
+	@Test
+	void testToString() {
+		Playlist testPlaylist = new Playlist("My Playlist");
+		testPlaylist.addDescription("This is a descript");
+		System.out.println(testPlaylist.toString());
+		assert(testPlaylist.toString().equals("Name: My Playlist  Description This is a descript  Length: 0 songs  Playtime: 0 seconds"));
+		
+		Playlist noDescript = new Playlist("My Playlist");
+		System.out.println(noDescript.toString());
+		assert(noDescript.toString().equals("Name: My Playlist  Length: 0songs  Playtime: 0 seconds"));
+		
+	}
 
 }

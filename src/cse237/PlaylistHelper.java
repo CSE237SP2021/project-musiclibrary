@@ -26,9 +26,11 @@ public class PlaylistHelper {
 	 */
 	public void addDefaultPlaylists() {
 		Playlist all = new Playlist("all");
+		all.addDescription("Contains all songs from all playlists");
 		this.addPlaylist(all);
 		
 		Playlist favorites = new Playlist("favorites");
+		favorites.addDescription("Contains all favorited songs");
 		this.addPlaylist(favorites);
 	}
 
