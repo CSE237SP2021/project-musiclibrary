@@ -91,6 +91,15 @@ class PlaylistHelperTests {
 	}
 	
 	@Test
+	void getFavoritesPlaylistTest() {
+		PlaylistHelper playlistHelper = new PlaylistHelper();
+		Playlist favorites  = playlistHelper.getFavoritesPlaylist();
+		ArrayList<Playlist> playlists = playlistHelper.getAllPlaylists();
+		assertEquals(playlists.get(1), favorites);
+	}
+	
+	
+	@Test
 	void getPlaylistAtTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
 		Playlist playlistAtIndexOne = playlistHelper.getPlaylistAt(1);

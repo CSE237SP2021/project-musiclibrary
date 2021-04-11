@@ -157,6 +157,7 @@ public class MusicLibrary {
 		System.out.println("How would you like to edit?");
 		System.out.println("1. Add Song");
 		System.out.println("2. Back");
+		System.out.println("3. Add Song to Favorites");
 	}
 	
 	public void processEditMenu(int editOption, int indexToPlayOrEdit) {
@@ -175,6 +176,12 @@ public class MusicLibrary {
 			mainMenuView();
 			
 			break;
+			
+		case 3:
+			
+			addSongToPlaylist();
+			runMainMenu();
+			
 		
 		default:
 			
@@ -195,6 +202,15 @@ public class MusicLibrary {
 		Song songToAdd = getSongFromUser();
 		this.playlistHelper.addSongToPlaylistAtIndex(songToAdd, indexOfPlaylistToAddSong);
 
+	}
+	
+	/**
+	 * Get a song from a user, then add it to the favorites
+	 * @param indexToAddToPlaylist
+	 */
+	public void addSongToPlaylist() {
+		Song songToFavorite = getSongFromUser();
+		this.playlistHelper.addSongToFavoritesHelper(songToFavorite);
 	}
 
 	/**

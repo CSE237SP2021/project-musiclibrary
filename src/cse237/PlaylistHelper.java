@@ -72,6 +72,13 @@ public class PlaylistHelper {
 		
 	}
 	
+	
+	public void addSongToFavoritesHelper(Song songToAdd) {
+		Playlist newFavorites = this.getFavoritesPlaylist();
+		newFavorites.addSong(songToAdd);
+		this.updatePlaylistHelper(newFavorites, 1);
+	}
+	
 	public void updatePlaylistHelper(Playlist editedPlaylist, int index) {
 		playlistArray.set(index, editedPlaylist);
 	}
@@ -82,6 +89,10 @@ public class PlaylistHelper {
 
 	public Playlist getAllSongsPlaylist() {
 		return playlistArray.get(0);
+	}
+	
+	public Playlist getFavoritesPlaylist() {
+		return playlistArray.get(1);
 	}
 	
 	public Playlist getPlaylistAt(int index) {
