@@ -96,18 +96,23 @@ public class MusicLibrary {
 		
 		switch(selectedOption) {
 		
+		//"Start Listening"
 		case 1:	 
 			musicPlayer.playPlaylist(listToPlay, keyboardIn);
 			runPlayMenu(listToPlay);
 			break;
-			
+		
+		//"Play a new random song from the playlist"
 		case 2:
 			System.out.println("Now Shuffling");
 			break;
-			
+		
+		//"Go back to the Main Menu"
 		case 3:
+			runMainMenu();
 			break;
-			
+		
+		//"Quit Music Library"
 		case 4:
 			System.out.println("Thank you for using Music Library");
 			break;
