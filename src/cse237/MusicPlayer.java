@@ -1,6 +1,7 @@
 package cse237;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -38,7 +39,14 @@ public class MusicPlayer {
 			currentSongIndex = i;
 			currentSong = songs.get(i);
 			updateTimeRemaining(0);
-			playSongs(keyboardIn);
+			playSongs();
+			
+			//if last song in the playlist is complete, return to the Now Playing menu.
+			if (i == playlistSize - 1) {
+				break;
+			}
+			
+			//else, show user options
 			String input = songEndMenuHandling(keyboardIn);
 			if (input.equals("back")) {
 				break;
@@ -60,20 +68,52 @@ public class MusicPlayer {
 	}
 	
 	/**
-	 * Method for playing the current Song : Emulates playing music by printing while tracking time of songs.
+	 * Method for playing the current Song : Emulates playing music by printing the current song's details.
 	 */
-	public void playSongs(Scanner keyboardIn){	
-		
-		int songTimeElapsed = (currentSong.getLength() - timeRemaining);
-		
+	
+	public void playSongs() {
 		printNowPlaying();
-
+		trackTime();
+	}
+	
+	/**
+	 * Method to hold the thread equal to the amount of time the song length is.
+	 */
+	public void trackTime() {
+		int songTimeElapsed = (currentSong.getLength() - timeRemaining);
 		long start = System.nanoTime();
-			
+		
 		while (songTimeElapsed < currentSong.getLength()) {
 			songTimeElapsed = calcSongTimeElapsed(start);
 			updateTimeRemaining(songTimeElapsed);
 		}
+	}
+	
+	public void shuffle(Playlist toPlay) {
+		
+		this.setPlaylist(toPlay);
+		
+		if(playlistSize == 0) {
+			System.out.println("No songs in playlist to play");
+			return;
+		}
+		
+		int randomSong = generateRandomSong();
+		currentSong = songs.get(randomSong);
+		updateTimeRemaining(0);
+		playSongs();
+		trackTime();
+		
+		System.out.println("The random song has ended. Now returning to the Now Playing menu");
+		
+	}
+	
+	public int generateRandomSong() {
+		int min = 0;
+		int max = playlistSize - 1;
+		
+		int randomInt = (int)Math.floor(Math.random() * (max-min+1) + min);
+		return randomInt;
 	}
 	
 	/**
