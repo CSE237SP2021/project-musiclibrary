@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Scanner;
+
 import org.junit.jupiter.api.Test;
 
 import cse237.MusicPlayer;
@@ -30,7 +32,8 @@ class MusicPlayerTests {
 		assert(allSongsPlaylist.getName()=="all");
 		
 		MusicPlayer player = new MusicPlayer();
-		player.playPlaylist(allSongsPlaylist);
+		Scanner keyboardIn = new Scanner(System.in);
+		player.playPlaylist(allSongsPlaylist, keyboardIn);
 		// requires reading system.out to test, just check console
 		// should display Now playing: Jailhouse Rock by Orson Wells. There are 5 seconds remaining.
 		// counting down
@@ -56,7 +59,8 @@ class MusicPlayerTests {
 		assert(playlist.getName()=="testPlaylist");
 		
 		MusicPlayer player = new MusicPlayer();
-		player.playPlaylist(playlist);
+		Scanner keyboardIn = new Scanner(System.in);
+		player.playPlaylist(playlist, keyboardIn);
 		// requires reading system.out to test, just check console
 		// should display Now playing: Jailhouse Rock by Orson Wells. There are 5 seconds remaining.
 		// counting down
@@ -68,7 +72,8 @@ class MusicPlayerTests {
 		Playlist testPlaylist = new Playlist("testPlaylist");
 		
 		MusicPlayer player = new MusicPlayer();
-		player.playPlaylist(testPlaylist);
+		Scanner keyboardIn = new Scanner(System.in);
+		player.playPlaylist(testPlaylist, keyboardIn);
 		// should display: No songs in playlist to play
 	}
 }

@@ -74,10 +74,51 @@ public class MusicLibrary {
 	 */
 	public void mainMenuPlay() {
 		Playlist listToPlay = getPlaylistToPlayFromUser();
-		musicPlayer.playPlaylist(listToPlay);
-		runMainMenu();
+		runPlayMenu(listToPlay);
 	}
-
+	
+	public void runPlayMenu(Playlist listToPlay) {
+		displayPlayMenu();
+		int selectedOption = this.getUserInput();
+		processPlayMenu(selectedOption, listToPlay);
+	}
+	
+	public void displayPlayMenu() {
+		System.out.println("~~~Now Playing~~~");
+		System.out.println("Please select an option: ");
+		System.out.println("1. Start Listening");
+		System.out.println("2. Play a new random song from the playlist");
+		System.out.println("3. Go back to the Main Menu");
+		System.out.println("4. Quit Music Library");
+	}
+	
+	public void processPlayMenu(int selectedOption, Playlist listToPlay) {
+		
+		switch(selectedOption) {
+		
+		case 1:	 
+			musicPlayer.playPlaylist(listToPlay, keyboardIn);
+			runPlayMenu(listToPlay);
+			break;
+			
+		case 2:
+			System.out.println("Now Shuffling");
+			break;
+			
+		case 3:
+			break;
+			
+		case 4:
+			System.out.println("Thank you for using Music Library");
+			break;
+			
+		default:
+			int nextInput = getValidUserInput();
+			this.processMainMenu(nextInput);
+			break;
+		}
+		
+	}
 	/**
 	 * Main Menu option 2: Allows user to choose a playlist and runs menu associated.
 	 */
@@ -119,9 +160,7 @@ public class MusicLibrary {
 		
 		case 1:
 			Playlist listToPlay = this.playlistHelper.getPlaylistAt(indexToPlayOrEdit);
-			this.musicPlayer.playPlaylist(listToPlay);
-			this.runMainMenu();
-			
+			runPlayMenu(listToPlay);
 			break;
 			
 		case 2:
