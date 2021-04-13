@@ -1,5 +1,6 @@
 # cse237-project Music Library
 
+### Iteration 1
 Completed User Stories:
 
 1. Built skeleton of program 
@@ -49,6 +50,31 @@ We used Scanner.nextInt() to select options from our menus, and this will not wo
 
 How to use the program:
 
+1. Use an IDE you are familiar with, 
+OR
+2. Open the command line / terminal
+3. Navigate to the directory this README is in
+4. Enter "./run.sh" (without quotations) in the terminal and hit enter
+
+
+### Iteration 2
+Completed User Stories:
+1. User can delete songs and playlists throughout the program.
+2. User can add or delete multiple songs and one time.
+3. User can favorite a song.
+4. User can choose to play the next song or go back to the main menu after it is done playing. 
+
+User stories for the next iteration:
+1. User can play the 'favorite' songs playlist
+2. User can choose a song to start from when playing a playlist
+3. User can edit songs
+4. User can have empty playlists
+5. User's bad input is tolerated, sanitized or re-prompted in a more rigorous way
+6. Any suggestions from feedback
+
+Does everything Work?
+
+How to use the program:
 0. Use an IDE you are familiar with, 
 OR
 1. Open the command line / terminal
