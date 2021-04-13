@@ -104,7 +104,8 @@ public class MusicLibrary {
 		
 		//"Play a new random song from the playlist"
 		case 2:
-			System.out.println("Now Shuffling");
+			musicPlayer.shuffle(listToPlay);
+			runPlayMenu(listToPlay);
 			break;
 		
 		//"Go back to the Main Menu"
