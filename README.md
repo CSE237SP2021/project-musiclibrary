@@ -67,6 +67,7 @@ Completed User Stories:
 5. User can have empty playlists
  - Currently, the program asks for a initial song for creating a new playlists, but that song can be deleted later.
  - Default playlists come with no songs included.
+6. User can play a random song from a playlist
 
 
 User stories for the next iteration:
