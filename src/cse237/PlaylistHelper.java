@@ -72,7 +72,33 @@ public class PlaylistHelper {
 		
 	}
 	
+	/**
+	 * Delete a song from one of the playlists, and update the default "all songs" playlist
+	 * @param songToDelete
+	 * @param playlistIndex
+	 */
+	public void deleteSongFromPlaylistAtIndex(Song songToDelete, int playlistIndex) {
+		
+		Playlist playlistToEdit = this.getPlaylistAt(playlistIndex);
+		playlistToEdit.removeSong(songToDelete);
+		this.updatePlaylistHelper(playlistToEdit, playlistIndex);
+		
+		if (playlistIndex > 0) {
+			
+			addSongToAllSongsPlaylist(songToDelete);
+		}
+	}
 	
+	public void deleteSongFromAllSongsPlaylist(Song songToDelete) {
+		Playlist newAllPlaylist = this.getAllSongsPlaylist();
+		newAllPlaylist.removeSong(songToDelete);
+		this.updatePlaylistHelper(newAllPlaylist, 0);
+	}
+	
+	/**
+	 * Adds the given song to the default "favorites" and "all songs" playlists
+	 * @param songToAdd
+	 */
 	public void addSongToFavoritesHelper(Song songToAdd) {
 		Playlist newFavorites = this.getFavoritesPlaylist();
 		newFavorites.addSong(songToAdd);
