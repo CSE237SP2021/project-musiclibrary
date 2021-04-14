@@ -79,6 +79,7 @@ User stories for the next iteration:
 6. Any suggestions from feedback
 
 Does everything Work?
+Yes.
 
 The program has some format restrictions: 
 We used Scanner.nextInt() to select options from our menus, and this will not work if a non-number is given.
