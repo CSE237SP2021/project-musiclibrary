@@ -59,20 +59,25 @@ OR
 
 ### Iteration 2
 Completed User Stories:
-1. User can delete songs and playlists throughout the program.
-2. User can add or delete multiple songs and one time.
+1. User can delete songs and playlists.
+2. User can add or delete multiple songs at one time.
 3. User can favorite a song.
 4. User can choose to play the next song or go back to the main menu after it is done playing. 
+5. User can have empty playlists
 
 User stories for the next iteration:
 1. User can play the 'favorite' songs playlist
 2. User can choose a song to start from when playing a playlist
 3. User can edit songs
-4. User can have empty playlists
-5. User's bad input is tolerated, sanitized or re-prompted in a more rigorous way
-6. Any suggestions from feedback
+4. User's bad input is tolerated, sanitized or re-prompted in a more rigorous way
+5. Any suggestions from feedback
 
 Does everything Work?
+The program has some format restrictions: 
+We used Scanner.nextInt() to select options from our menus, and this will not work if a non-number is given.
+When selecting playlists, only good input should be given (choose from the displayed indices).
+Playing a playlist / displaying a song while being played may feel a bit awkward compared to last iteration,
+due to asking if user wants to continue after each song.
 
 How to use the program:
 0. Use an IDE you are familiar with, 
