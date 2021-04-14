@@ -144,7 +144,7 @@ public class MusicPlayer {
 	
 	public void setPlaylist(Playlist toPlay) {
 		this.currentPlaylist = toPlay;
-		this.playlistSize = toPlay.numberOfSongs();
+		this.playlistSize = toPlay.getNumberOfSongs();
 		this.songs = toPlay.getSongs();
 		try {
 			currentSong = songs.get(0);

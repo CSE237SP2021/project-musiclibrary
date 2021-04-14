@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import cse237.Playlist;
 import cse237.PlaylistHelper;
+import cse237.Song;
 
 class PlaylistHelperTests {
 
@@ -100,6 +101,43 @@ class PlaylistHelperTests {
 	
 	
 	@Test
+	void addSongsToPlaylistAtIndexTest() {
+		PlaylistHelper testHelper = new PlaylistHelper();
+		Playlist testPlaylist = new Playlist("testPlaylist");
+		testHelper.addPlaylist(testPlaylist);
+		Song firstSong = new Song("First", "First", 3);
+		Song secondSong = new Song("Second", "Second",4);
+		testHelper.addSongToPlaylistAtIndex(firstSong, 2);
+		testHelper.addSongToPlaylistAtIndex(secondSong, 2);
+		Playlist playlistAt2 = testHelper.getPlaylistAt(2);
+		Playlist allSongs = testHelper.getAllSongsPlaylist();
+		assertEquals(playlistAt2.getPlaytime(),7);
+		assertEquals(allSongs.getPlaytime(), 7);
+	}
+	
+	@Test 
+	void deleteSongsToPlaylistAtIndexTest(){
+		PlaylistHelper testHelper = new PlaylistHelper();
+		Playlist testPlaylist = new Playlist("testPlaylist");
+		testHelper.addPlaylist(testPlaylist);
+		Song firstSong = new Song("First", "First", 3);
+		Song secondSong = new Song("Second", "Second",4);
+		testHelper.addSongToPlaylistAtIndex(firstSong, 2);
+		testHelper.addSongToPlaylistAtIndex(secondSong, 2);
+		
+		testHelper.deleteSongFromPlaylistAtIndex(firstSong, 0);
+		Playlist allSongs = testHelper.getAllSongsPlaylist();
+		Playlist playlistAt2 = testHelper.getPlaylistAt(2);
+		assertEquals(playlistAt2.getPlaytime(), 7);
+		assertEquals(allSongs.getPlaytime(),4);
+
+		testHelper.deleteSongFromPlaylistAtIndex(secondSong, 2);
+		playlistAt2 = testHelper.getPlaylistAt(2);
+		allSongs = testHelper.getAllSongsPlaylist();
+		assertEquals(playlistAt2.getPlaytime(), 3);
+	}
+	
+	@Test
 	void getPlaylistAtTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
 		Playlist playlistAtIndexOne = playlistHelper.getPlaylistAt(1);
@@ -108,7 +146,7 @@ class PlaylistHelperTests {
 	}
 	
 	@Test
-	void getNumberOfPlaylists() {
+	void getNumberOfPlaylistsTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
 		int defaultNumberOfPlaylists = playlistHelper.getNumberOfPlaylists();
 		assertEquals(defaultNumberOfPlaylists, 2);

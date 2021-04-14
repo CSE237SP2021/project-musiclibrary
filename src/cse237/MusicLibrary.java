@@ -201,8 +201,9 @@ public class MusicLibrary {
 	public void displayEditMenu() {
 		System.out.println("\nHow would you like to edit?");
 		System.out.println("1. Add Song");
-		System.out.println("2. Back");
+		System.out.println("2. Delete Song");
 		System.out.println("3. Add Song to Favorites");
+		System.out.println("4. Back");
 	}
 	
 	public void processEditMenu(int editOption, int indexToPlayOrEdit) {
@@ -212,21 +213,24 @@ public class MusicLibrary {
 		case 1:
 			
 			editPlaylistAddSong(indexToPlayOrEdit);
-			runMainMenu();
-			
+			runEditMenu(indexToPlayOrEdit);
 			break;
 			
 		case 2:
 			
-			mainMenuView();
-			
+			editPlaylistDeleteSong(indexToPlayOrEdit);
+			runEditMenu(indexToPlayOrEdit);
 			break;
 			
 		case 3:
 			
-			addSongToPlaylist();
-			runMainMenu();
-			
+			addSongToFavoritesPlaylist(indexToPlayOrEdit);
+			runEditMenu(indexToPlayOrEdit);
+			break;
+		
+		case 4:
+			mainMenuView();
+			break;
 		
 		default:
 			
@@ -237,6 +241,20 @@ public class MusicLibrary {
 		}
 		
 	}
+
+	public void editPlaylistDeleteSong(int playlistIndex) {
+		
+		Playlist playlistToDeleteFrom = this.playlistHelper.getPlaylistAt(playlistIndex);
+		
+		if (playlistToDeleteFrom.getNumberOfSongs() < 1) {
+			System.out.println("Playlist empty; no songs to delete!");
+		} else {
+			Song songToDelete = getUserChoiceSongFromPlaylist(playlistToDeleteFrom);
+			this.playlistHelper.deleteSongFromPlaylistAtIndex(songToDelete, playlistIndex);
+		}
+		
+	}
+
 
 	/**
 	 * Get a song from a user, then add it to the program
@@ -250,12 +268,19 @@ public class MusicLibrary {
 	}
 	
 	/**
-	 * Get a song from a user, then add it to the favorites
+	 * Get a song from a user, selected from the current playlist, then add it to the favorites
 	 * @param indexToAddToPlaylist
 	 */
-	public void addSongToPlaylist() {
-		Song songToFavorite = getSongFromUser();
-		this.playlistHelper.addSongToFavoritesHelper(songToFavorite);
+	public void addSongToFavoritesPlaylist(int playlistIndex) {
+		
+		Playlist playlistToEdit = this.playlistHelper.getPlaylistAt(playlistIndex);
+		
+		if (playlistToEdit.getNumberOfSongs()<1 ) {
+			System.out.println("Playlist empty; no songs to favorite");
+		} else {
+			Song songToFavorite = this.getUserChoiceSongFromPlaylist(playlistToEdit);
+			this.playlistHelper.addSongToFavoritesHelper(songToFavorite);
+		}
 	}
 
 	/**
@@ -360,6 +385,22 @@ public class MusicLibrary {
 		System.out.println("\nPlease select a playlist to play or edit.");
 		int indexToPlayOrEdit = selectPlaylist();
 		return indexToPlayOrEdit;
+	}
+	
+	public Song getUserChoiceSongFromPlaylist(Playlist playlistToGetSongFrom) {
+		
+		System.out.println("Please select a song: ");
+		playlistToGetSongFrom.displayPlaylistAndSongs();
+		
+		int indexOfSong = this.getUserInput();
+		
+		while(indexOfSong >= playlistToGetSongFrom.getNumberOfSongs()) {
+			System.out.println("Please input a valid index:");
+			indexOfSong = this.getUserInput();
+		}
+		
+		Song songToDelete = playlistToGetSongFrom.getSongAt(indexOfSong);
+		return songToDelete;
 	}
 
 }
