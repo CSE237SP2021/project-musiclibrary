@@ -1,70 +1,135 @@
 package cse237;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Collections;
 import java.util.Scanner;
 
 public class MusicPlayer {
 
-	private Playlist nowPlaying;
+	private Playlist currentPlaylist;
 	private Song currentSong;
 	private int timeRemaining;
 	private int currentSongIndex;
 	private int playlistSize;
-	ArrayList<Song> songs;
+	private ArrayList<Song> songs;
 
 	
-	public MusicPlayer(Playlist selected) {
-		this.nowPlaying = selected;
-		playlistSize = selected.numberOfSongs();
-		songs = selected.getSongs();
+	public MusicPlayer() {
 		
-		//by default, the current song is the first song in the playlist
-		currentSong = songs.get(0);
-		currentSongIndex = 0;
-		timeRemaining = 0;
+
 	}
 	
 	
 	/**
 	 * Iterates through the Songs in the toPlay Playlist, and plays them
-	 * @param toPlay
+	 * @param toPlay, keyboardIn
 	 */
-	public void play(Playlist toPlay){
+	public void playPlaylist(Playlist toPlay, Scanner keyboardIn){
 		
 		this.setPlaylist(toPlay);
+		
+		if(playlistSize == 0) {
+			System.out.println("\nNo songs in playlist to play");
+			return;
+		}
+		
 		
 		for (int i = currentSongIndex; i < playlistSize; i++) {
 			currentSongIndex = i;
 			currentSong = songs.get(i);
-			
+			updateTimeRemaining(0);
 			playSongs();
+			
+			//if last song in the playlist is complete, return to the Now Playing menu.
+			if (i == playlistSize - 1) {
+				break;
+			}
+			
+			//else, show user options
+			String input = songEndMenuHandling(keyboardIn);
+			if (input.equals("back")) {
+				break;
+			}
 		}
+		
+		System.out.println("\nThe playlist has been fully listened to. Now returning to the Now Playing menu.");
+		
 		currentSongIndex = 0;
+		
+	}
+	
+	public String songEndMenuHandling(Scanner keyboardIn) {
+		
+		System.out.println("The song has finished. Input 'back' to navigate back to the Now Playing menu, or 'next' to continue on to the next song.");
+		String input = keyboardIn.nextLine();
+		return input;
+		
 	}
 	
 	/**
-	 * Method for playing the current Song : Emulates playing music by printing while tracking time of songs.
+	 * Method for playing the current Song : Emulates playing music by printing the current song's details.
 	 */
-	public void playSongs(){	
+	
+	public void playSongs() {
+		printNowPlaying();
+		trackTime();
+	}
+	
+	/**
+	 * Method to hold the thread equal to the amount of time the song length is.
+	 */
+	public void trackTime() {
+		int songTimeElapsed = (currentSong.getLength() - timeRemaining);
+		long start = System.nanoTime();
 		
-		int songTimeElapsed = 0;
-		
-		timeRemaining = currentSong.getLength() - songTimeElapsed;
-
 		while (songTimeElapsed < currentSong.getLength()) {
-			
-			//print a play statement every second for every second in the song
-			//then update how much of the song has been listened to, as well as
-			//how much time there is remaining in the song
-			printNowPlaying();
-			songTimeElapsed++;
+			songTimeElapsed = calcSongTimeElapsed(start);
 			updateTimeRemaining(songTimeElapsed);
-			//pause for 1 second
-			sleepOneSecond();
 		}
 	}
 	
+	public void shuffle(Playlist toPlay) {
+		
+		this.setPlaylist(toPlay);
+		
+		if(playlistSize == 0) {
+			System.out.println("\nNo songs in playlist to play");
+			return;
+		}
+		
+		int randomSong = generateRandomSong();
+		currentSong = songs.get(randomSong);
+		updateTimeRemaining(0);
+		playSongs();
+		trackTime();
+		
+		System.out.println("\nThe random song has ended. Now returning to the Now Playing menu");
+		
+	}
+	
+	public int generateRandomSong() {
+		int min = 0;
+		int max = playlistSize - 1;
+		
+		int randomInt = (int)Math.floor(Math.random() * (max-min+1) + min);
+		return randomInt;
+	}
+	
+	/**
+	 * Method for determining how long it has been since the start of the given song.
+	 */
+	public int calcSongTimeElapsed(long start) {
+		long now = System.nanoTime();
+		int timeElapsed = nanoSecToSec(now) - nanoSecToSec(start);
+		return timeElapsed;
+	}
+	
+	
+	public int nanoSecToSec(long nano) {
+		long seconds = nano / (1000000000);
+		return (int)seconds;
+	}
 	
 	public void printNowPlaying() {
 		System.out.println("Now playing: " + currentSong.getTitle() + " by " + currentSong.getArtist()+ ". There are " +
@@ -76,38 +141,18 @@ public class MusicPlayer {
 		timeRemaining = currentSong.getLength() - songTimeElapsed;
 	}
 	
-	//Not Finished - will try to implement if Iteration2
-	private void processPlayerMenu(String selectedOption) {
-		
-		//TODO: add functionality to music player
-		
-		switch(selectedOption) {
-		
-		case "shuffle":
-			break;
-			
-		case "pause":
-			break;
-			
-		case "play":
-			break;
-			
-		case "back":
-			break;
-		}
-	}
-
-	public void sleepOneSecond(){
-	    try {
-	        Thread.sleep(1000);
-	    } catch (InterruptedException e) {}
-	}
 	
 	public void setPlaylist(Playlist toPlay) {
-		this.nowPlaying = toPlay;
-		this.playlistSize = toPlay.numberOfSongs();
+		this.currentPlaylist = toPlay;
+		this.playlistSize = toPlay.getNumberOfSongs();
 		this.songs = toPlay.getSongs();
-		currentSong = songs.get(0);
+		try {
+			currentSong = songs.get(0);
+		}
+		catch(Exception e){ // for case where no songs
+			currentSong = null;
+		}
+		
 		currentSongIndex = 0;
 		timeRemaining = 0;
 	}

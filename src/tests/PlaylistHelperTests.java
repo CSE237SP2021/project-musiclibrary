@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import cse237.Playlist;
 import cse237.PlaylistHelper;
+import cse237.Song;
 
 class PlaylistHelperTests {
 
@@ -83,11 +84,57 @@ class PlaylistHelperTests {
 	}
 	
 	@Test
-	void getDefaultPlaylistTest() {
+	void getAllSongsPlaylistTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
-		Playlist allSongs  = playlistHelper.getDefaultPlaylist();
+		Playlist allSongs  = playlistHelper.getAllSongsPlaylist();
 		ArrayList<Playlist> playlists = playlistHelper.getAllPlaylists();
 		assertEquals(playlists.get(0), allSongs);
+	}
+	
+	@Test
+	void getFavoritesPlaylistTest() {
+		PlaylistHelper playlistHelper = new PlaylistHelper();
+		Playlist favorites  = playlistHelper.getFavoritesPlaylist();
+		ArrayList<Playlist> playlists = playlistHelper.getAllPlaylists();
+		assertEquals(playlists.get(1), favorites);
+	}
+	
+	
+	@Test
+	void addSongsToPlaylistAtIndexTest() {
+		PlaylistHelper testHelper = new PlaylistHelper();
+		Playlist testPlaylist = new Playlist("testPlaylist");
+		testHelper.addPlaylist(testPlaylist);
+		Song firstSong = new Song("First", "First", 3);
+		Song secondSong = new Song("Second", "Second",4);
+		testHelper.addSongToPlaylistAtIndex(firstSong, 2);
+		testHelper.addSongToPlaylistAtIndex(secondSong, 2);
+		Playlist playlistAt2 = testHelper.getPlaylistAt(2);
+		Playlist allSongs = testHelper.getAllSongsPlaylist();
+		assertEquals(playlistAt2.getPlaytime(),7);
+		assertEquals(allSongs.getPlaytime(), 7);
+	}
+	
+	@Test 
+	void deleteSongsToPlaylistAtIndexTest(){
+		PlaylistHelper testHelper = new PlaylistHelper();
+		Playlist testPlaylist = new Playlist("testPlaylist");
+		testHelper.addPlaylist(testPlaylist);
+		Song firstSong = new Song("First", "First", 3);
+		Song secondSong = new Song("Second", "Second",4);
+		testHelper.addSongToPlaylistAtIndex(firstSong, 2);
+		testHelper.addSongToPlaylistAtIndex(secondSong, 2);
+		
+		testHelper.deleteSongFromPlaylistAtIndex(firstSong, 0);
+		Playlist allSongs = testHelper.getAllSongsPlaylist();
+		Playlist playlistAt2 = testHelper.getPlaylistAt(2);
+		assertEquals(playlistAt2.getPlaytime(), 7);
+		assertEquals(allSongs.getPlaytime(),4);
+
+		testHelper.deleteSongFromPlaylistAtIndex(secondSong, 2);
+		playlistAt2 = testHelper.getPlaylistAt(2);
+		allSongs = testHelper.getAllSongsPlaylist();
+		assertEquals(playlistAt2.getPlaytime(), 3);
 	}
 	
 	@Test
@@ -99,7 +146,7 @@ class PlaylistHelperTests {
 	}
 	
 	@Test
-	void getNumberOfPlaylists() {
+	void getNumberOfPlaylistsTest() {
 		PlaylistHelper playlistHelper = new PlaylistHelper();
 		int defaultNumberOfPlaylists = playlistHelper.getNumberOfPlaylists();
 		assertEquals(defaultNumberOfPlaylists, 2);

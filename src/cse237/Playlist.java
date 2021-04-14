@@ -17,6 +17,9 @@ public class Playlist {
 		this.songs.add(songToBeAdded);
 	}
 	
+	public void removeSong(Song songToBeRemoved) {
+		this.songs.remove(songToBeRemoved);
+	}
 	/**
 	 * Prints the information summarizing the playlist in one line
 	 */
@@ -25,16 +28,21 @@ public class Playlist {
 		//Playtime: 140 seconds
 		
 		if (description=="") {
-			return ("Name: " + this.name + "  Length: " + this.numberOfSongs()+ "songs  Playtime: " + this.getPlaytime() + " seconds");
+			return ("Name: " + this.name + "  Length: " + this.getNumberOfSongs()+ " songs  Playtime: " + this.getPlaytime() + " seconds");
 		}
 		//Name: MyPlaylist  Description: This is a playlist of my favorites songs  Length: 12 songs  Playtime: 140 seconds
-		return ("Name: " + this.name + "  Description " + this.description + "  Length: " + this.numberOfSongs()+ " songs  Playtime: " + 
+		return ("Name: " + this.name + "  Description: " + this.description + "  Length: " + this.getNumberOfSongs()+ " songs  Playtime: " + 
 				this.getPlaytime() + " seconds");
 	}
 	/**
 	 * Prints a list of all the songs in the playlist
 	 */
 	public void displaySongs() {
+		if(songs.size() ==0) {
+			System.out.print("Currently has no songs\n");
+			return;
+		}
+		
 		for(int i = 0; i<songs.size(); i++) {
 			Song currentSong = songs.get(i);
 			//1. Test Song by GroupA <3 minutes 40 seconds>
@@ -46,12 +54,12 @@ public class Playlist {
 	 * toString() and displaySongs in one method
 	 */
 	public void displayPlaylistAndSongs() {
-		System.out.println("Currently: ");
-		this.toString();
+		System.out.println("\nCurrent playlist: ");
+		System.out.println(this.toString());
 		this.displaySongs();
 	}
 	
-	public int numberOfSongs() {
+	public int getNumberOfSongs() {
 		return this.songs.size();
 	}
 	
@@ -75,6 +83,10 @@ public class Playlist {
 	
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public Song getSongAt(int index) {
+		return this.songs.get(index);
 	}
 	
 	public ArrayList<Song> getSongs(){

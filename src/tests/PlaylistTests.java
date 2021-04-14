@@ -13,11 +13,34 @@ class PlaylistTests {
 	void testAddSong() {
 		Playlist testPlaylist = new Playlist("My Playlist");
 		Song songToAdd = new Song("Test Title", "Test Arist", 120);
-		int numberOfSongsOnPlaylist = testPlaylist.numberOfSongs();
+		int numberOfSongsOnPlaylist = testPlaylist.getNumberOfSongs();
 		assertEquals(numberOfSongsOnPlaylist, 0);
 		testPlaylist.addSong(songToAdd);
-		numberOfSongsOnPlaylist = testPlaylist.numberOfSongs();
+		numberOfSongsOnPlaylist = testPlaylist.getNumberOfSongs();
 		assertEquals(numberOfSongsOnPlaylist, 1);
+	}
+	
+	@Test
+	void testRemoveSong() {
+		Playlist testPlaylist = new Playlist("My Playlist");
+		Song songToAdd = new Song("Test Title", "Test Arist", 120);
+		testPlaylist.addSong(songToAdd);
+		Song anotherSong = new Song("Title2", "Artist2", 60);
+		testPlaylist.addSong(anotherSong);
+		testPlaylist.removeSong(songToAdd);
+		assertEquals(testPlaylist.getPlaytime(), 60);
+	}
+	
+	@Test
+	void testGetSongAt() {
+		Playlist testPlaylist = new Playlist("My Playlist");
+		Song songToAdd = new Song("Test Title", "Test Arist", 120);
+		testPlaylist.addSong(songToAdd);
+		Song anotherSong = new Song("Title2", "Artist2", 60);
+		testPlaylist.addSong(anotherSong);
+		assertEquals(testPlaylist.getSongAt(0), songToAdd);
+		assertEquals(testPlaylist.getSongAt(1), anotherSong);
+
 	}
 	
 	@Test
@@ -57,6 +80,17 @@ class PlaylistTests {
 		
 	}
 	
-	
+	@Test
+	void testToString() {
+		Playlist testPlaylist = new Playlist("My Playlist");
+		testPlaylist.addDescription("This is a descript");
+		System.out.println(testPlaylist.toString());
+		assert(testPlaylist.toString().equals("Name: My Playlist  Description: This is a descript  Length: 0 songs  Playtime: 0 seconds"));
+		
+		Playlist noDescript = new Playlist("My Playlist");
+		System.out.println(noDescript.toString());
+		assert(noDescript.toString().equals("Name: My Playlist  Length: 0 songs  Playtime: 0 seconds"));
+		
+	}
 
 }
