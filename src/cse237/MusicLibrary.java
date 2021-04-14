@@ -39,7 +39,8 @@ public class MusicLibrary {
 		System.out.println("1. Play an existing playlist");
 		System.out.println("2. View an existing playlist to Play or Edit");
 		System.out.println("3. Add a new playlist");
-		System.out.println("4. Quit Music Library");
+		System.out.println("4. Delete an existing playlist");
+		System.out.println("5. Quit Music Library");
 	}
 	
 	private void processMainMenu(int selectedOption) {
@@ -57,9 +58,12 @@ public class MusicLibrary {
 		case 3:
 			mainMenuAddPlaylist();
 			break;
-			
 		case 4:
+			mainMenuDeletePlaylist();
+			break;
+		case 5:
 			System.out.println("\nThank you for using Music Library");
+			System.exit(0);
 			break;
 			
 		default:
@@ -68,6 +72,8 @@ public class MusicLibrary {
 			break;
 		}
 	}
+
+	
 	
 	/**
 	 *Main Menu option 1: Prompts the user to select a playlist then play it.
@@ -370,6 +376,20 @@ public class MusicLibrary {
 		this.playlistHelper.addSongToAllSongsPlaylist(firstSong);
 		
 		return newPlaylist;
+	}
+	
+	/**
+	 * Main menu option 4: delete an existing user-made playlist
+	 */
+	public void mainMenuDeletePlaylist() {
+		if (this.playlistHelper.getNumberOfPlaylists()<=2) {
+			System.out.println("\nDefault playlists \"all songs\" and \"favorites\" cannot be deleted");			
+		} else {
+			System.out.println("\nPlease select a playlist to delete: ");
+			int indexOfPlaylistToDelete = this.selectPlaylist();
+			this.playlistHelper.deletePlaylistAt(indexOfPlaylistToDelete);
+		}
+		runMainMenu();
 	}
 	
 	/**
