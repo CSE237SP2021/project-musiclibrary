@@ -116,6 +116,8 @@ public class MusicLibrary {
 		//"Quit Music Library"
 		case 4:
 			System.out.println("\nThank you for using Music Library");
+			System.exit(0);
+			
 			break;
 			
 		default:
@@ -176,7 +178,7 @@ public class MusicLibrary {
 			
 		case 3:
 			
-			this.runMainMenu();
+			runMainMenu();
 			break;
 			
 		default:
@@ -200,7 +202,7 @@ public class MusicLibrary {
 
 	public void displayEditMenu() {
 		System.out.println("\nHow would you like to edit?");
-		System.out.println("1. Add Song");
+		System.out.println("1. Add Songs");
 		System.out.println("2. Delete Song");
 		System.out.println("3. Add Song to Favorites");
 		System.out.println("4. Back");
@@ -213,19 +215,17 @@ public class MusicLibrary {
 		case 1:
 			
 			editPlaylistAddSong(indexToPlayOrEdit);
-			runEditMenu(indexToPlayOrEdit);
 			break;
 			
 		case 2:
 			
 			editPlaylistDeleteSong(indexToPlayOrEdit);
-			runEditMenu(indexToPlayOrEdit);
 			break;
 			
 		case 3:
 			
 			addSongToFavoritesPlaylist(indexToPlayOrEdit);
-			runEditMenu(indexToPlayOrEdit);
+			runViewMenu(indexToPlayOrEdit);
 			break;
 		
 		case 4:
@@ -242,17 +242,49 @@ public class MusicLibrary {
 		
 	}
 
+	/**
+	 * Let user select a song from the given playlist to delete
+	 * @param playlistIndex
+	 */
 	public void editPlaylistDeleteSong(int playlistIndex) {
 		
 		Playlist playlistToDeleteFrom = this.playlistHelper.getPlaylistAt(playlistIndex);
 		
 		if (playlistToDeleteFrom.getNumberOfSongs() < 1) {
-			System.out.println("Playlist empty; no songs to delete!");
+			System.out.println("\nPlaylist empty; no songs to delete!");
 		} else {
 			Song songToDelete = getUserChoiceSongFromPlaylist(playlistToDeleteFrom);
 			this.playlistHelper.deleteSongFromPlaylistAtIndex(songToDelete, playlistIndex);
+			runDeleteAnotherSongMenu(playlistIndex);
 		}
 		
+	}
+
+	public void runDeleteAnotherSongMenu(int playlistIndex) {
+		displayDeleteAnotherSongMenu();
+		int input = this.getUserInput();
+		processDeleteAnotherSongMenu(playlistIndex, input);
+	}
+
+	public void displayDeleteAnotherSongMenu() {
+		System.out.println("\nWould you like to delete another song?");
+		System.out.println("1. Yes");
+		System.out.println("2. No");
+	}
+
+	public void processDeleteAnotherSongMenu(int playlistIndex, int input) {
+		switch(input) {
+		case 1:
+			editPlaylistDeleteSong(playlistIndex);
+			break;
+		case 2:
+			runViewMenu(playlistIndex);
+			break;
+		default:
+			int newInput = this.getValidUserInput();
+			processDeleteAnotherSongMenu(playlistIndex, newInput);
+			break;
+		}
 	}
 
 
@@ -264,7 +296,35 @@ public class MusicLibrary {
 		
 		Song songToAdd = getSongFromUser();
 		this.playlistHelper.addSongToPlaylistAtIndex(songToAdd, indexOfPlaylistToAddSong);
+		runAddAnotherSongMenu(indexOfPlaylistToAddSong);
+		
+	}
 
+	public void runAddAnotherSongMenu(int indexOfPlaylistToAddSong) {
+		displayAddAnotherSongMenu();
+		int input = this.getUserInput();
+		processAddAnotherSongMenu(indexOfPlaylistToAddSong, input);
+	}
+
+	public void displayAddAnotherSongMenu() {
+		System.out.println("\nWould you like to add another song?");
+		System.out.println("1. Yes");
+		System.out.println("2. No");
+	}
+
+	public void processAddAnotherSongMenu(int indexOfPlaylistToAddSong, int input) {
+		switch(input) {
+		case 1:
+			editPlaylistAddSong(indexOfPlaylistToAddSong);
+			break;
+		case 2:
+			runViewMenu(indexOfPlaylistToAddSong);
+			break;
+		default:
+			int newInput = this.getValidUserInput();
+			processAddAnotherSongMenu(indexOfPlaylistToAddSong, newInput);
+			break;
+		}
 	}
 	
 	/**
@@ -276,7 +336,7 @@ public class MusicLibrary {
 		Playlist playlistToEdit = this.playlistHelper.getPlaylistAt(playlistIndex);
 		
 		if (playlistToEdit.getNumberOfSongs()<1 ) {
-			System.out.println("Playlist empty; no songs to favorite");
+			System.out.println("\nPlaylist empty; no songs to favorite");
 		} else {
 			Song songToFavorite = this.getUserChoiceSongFromPlaylist(playlistToEdit);
 			this.playlistHelper.addSongToFavoritesHelper(songToFavorite);
@@ -389,13 +449,13 @@ public class MusicLibrary {
 	
 	public Song getUserChoiceSongFromPlaylist(Playlist playlistToGetSongFrom) {
 		
-		System.out.println("Please select a song: ");
+		System.out.println("\nPlease select a song: ");
 		playlistToGetSongFrom.displayPlaylistAndSongs();
 		
 		int indexOfSong = this.getUserInput();
 		
 		while(indexOfSong >= playlistToGetSongFrom.getNumberOfSongs()) {
-			System.out.println("Please input a valid index:");
+			System.out.println("\nPlease input a valid index:");
 			indexOfSong = this.getUserInput();
 		}
 		
