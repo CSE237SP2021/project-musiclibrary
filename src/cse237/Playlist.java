@@ -51,7 +51,7 @@ public class Playlist {
 	 * toString() and displaySongs in one method
 	 */
 	public void displayPlaylistAndSongs() {
-		System.out.println("Currently: ");
+		System.out.println("\nCurrent playlist: ");
 		System.out.println(this.toString());
 		this.displaySongs();
 	}

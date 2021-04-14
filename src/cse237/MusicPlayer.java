@@ -30,7 +30,7 @@ public class MusicPlayer {
 		this.setPlaylist(toPlay);
 		
 		if(playlistSize == 0) {
-			System.out.println("No songs in playlist to play");
+			System.out.println("\nNo songs in playlist to play");
 			return;
 		}
 		
@@ -53,7 +53,7 @@ public class MusicPlayer {
 			}
 		}
 		
-		System.out.println("The playlist has been fully listened to. Now returning to the Now Playing menu.");
+		System.out.println("\nThe playlist has been fully listened to. Now returning to the Now Playing menu.");
 		
 		currentSongIndex = 0;
 		
@@ -94,7 +94,7 @@ public class MusicPlayer {
 		this.setPlaylist(toPlay);
 		
 		if(playlistSize == 0) {
-			System.out.println("No songs in playlist to play");
+			System.out.println("\nNo songs in playlist to play");
 			return;
 		}
 		
@@ -104,7 +104,7 @@ public class MusicPlayer {
 		playSongs();
 		trackTime();
 		
-		System.out.println("The random song has ended. Now returning to the Now Playing menu");
+		System.out.println("\nThe random song has ended. Now returning to the Now Playing menu");
 		
 	}
 	
