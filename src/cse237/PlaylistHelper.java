@@ -34,6 +34,14 @@ public class PlaylistHelper {
 		this.addPlaylist(favorites);
 	}
 
+	public void deletePlaylistAt(int indexOfPlaylistToDelete) {
+		if (indexOfPlaylistToDelete >= 2) {
+			this.playlistArray.remove(indexOfPlaylistToDelete);
+		} else {
+			System.out.println("\nDefault playlists \"all songs\" and \"favorites\" cannot be deleted");			
+		}
+	}
+	
 	// no test cases due to it being print style
 	public void printAllPlaylists() {
 		
