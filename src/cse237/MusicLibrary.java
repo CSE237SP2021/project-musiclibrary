@@ -40,7 +40,8 @@ public class MusicLibrary {
 		System.out.println("2. View an existing playlist to Play or Edit");
 		System.out.println("3. Add a new playlist");
 		System.out.println("4. Delete an existing playlist");
-		System.out.println("5. Quit Music Library");
+		System.out.println("5. Create a random playlist");
+		System.out.println("6. Quit Music Library");
 	}
 	
 	private void processMainMenu(int selectedOption) {
@@ -62,6 +63,9 @@ public class MusicLibrary {
 			mainMenuDeletePlaylist();
 			break;
 		case 5:
+			createRandomPlaylist();
+			break;
+		case 6:
 			System.out.println("\nThank you for using Music Library");
 			System.exit(0);
 			break;
@@ -390,6 +394,62 @@ public class MusicLibrary {
 			this.playlistHelper.deletePlaylistAt(indexOfPlaylistToDelete);
 		}
 		runMainMenu();
+	}
+	
+	/**
+	 * Main menu option 5: create a random playlist based on user input
+	 */
+	public void createRandomPlaylist() {
+		int length = getLengthFromUser();
+		Playlist random =  getUserInputForRandomPlaylist(length);
+		this.playlistHelper.addPlaylist(random);
+		int indexOfPlaylist = playlistHelper.getNumberOfPlaylists()-1;
+		generateRandomPlaylist(length, indexOfPlaylist);
+		runMainMenu();
+	}
+	
+	/**
+	 * 
+	 * @param length of the random playlist
+	 * @return random playlist with user specified length and title
+	 */
+	public Playlist getUserInputForRandomPlaylist(int length) {
+		String title = getTitleFromUser();
+		Playlist random = new Playlist(title);
+		return random;
+	}
+	
+	/**
+	 * Forms random playlist
+	 * @param length of playlist to construct
+	 * @param indexOfPlaylist in list of playlists
+	 */
+	public void generateRandomPlaylist(int length, int indexOfPlaylist) {
+		for(int i = 0; i<length; ++i) {
+			Song songToAdd = playlistHelper.getRandomSongFromAllSongs();
+			playlistHelper.addSongToPlaylistAtIndex(songToAdd, indexOfPlaylist);
+		}
+	}
+	
+	/**
+	 * Asks user for length of their random playlist
+	 * @return the length of the  playlist
+	 */
+	public int getLengthFromUser() {
+		System.out.println("How long would you like your random playlist to be?");
+		int length = keyboardIn.nextInt();
+		return length;
+	}
+	
+	/**
+	 * Asks the user for title to name their playlist
+	 * @return title of playlist
+	 */
+	public String getTitleFromUser() {
+		System.out.println("What would you like your random playlist to be called?");
+		keyboardIn.nextLine();
+		String title = keyboardIn.nextLine();
+		return title;
 	}
 	
 	/**
