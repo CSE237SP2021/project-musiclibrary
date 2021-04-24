@@ -56,6 +56,28 @@ public class PlaylistHelper {
 	}
 	
 	/**
+	 * Gets a random index from the all songs playlist
+	 * helper method for creating random playlist
+	 * @return random index from all songs playlist
+	 */
+	public int getRandomIndexFromAllSongs() {
+		Playlist allSongs = getAllSongsPlaylist();
+		int min = 0;
+		int max = allSongs.getNumberOfSongs()- 1;
+		int randomInt = (int)Math.floor(Math.random() * (max-min+1) + min);
+		return randomInt;
+	}
+	
+	/**
+	 * Gets a random song from all songs playlist
+	 * @return random Song from all songs
+	 */
+	public Song getRandomSongFromAllSongs() {
+		int randomIndex = getRandomIndexFromAllSongs();
+		return getSongFromAllSongsAtIndex(randomIndex);
+	}
+	
+	/**
 	 * Add a song to one of the playlists, and update the default "all" playlist
 	 * @param songToAdd
 	 * @param playlistIndex
@@ -78,6 +100,20 @@ public class PlaylistHelper {
 		newAllPlaylist.addSong(songToAdd);
 		this.updatePlaylistHelper(newAllPlaylist, 0);
 		
+	}
+	
+	/**
+	 * Get a specified song from all songs playlist
+	 * @param index of song to get from playlist
+	 * @return song at that index
+	 */
+	public Song getSongFromAllSongsAtIndex(int index) {
+		Playlist allSongs = this.getAllSongsPlaylist();
+		Song defaultSong =  new Song("Default", "Default", 5);
+		if(index<allSongs.getNumberOfSongs()) {
+			return allSongs.getSongAt(index);
+		}
+		return defaultSong;
 	}
 	
 	/**

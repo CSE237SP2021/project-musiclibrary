@@ -151,4 +151,51 @@ class PlaylistHelperTests {
 		int defaultNumberOfPlaylists = playlistHelper.getNumberOfPlaylists();
 		assertEquals(defaultNumberOfPlaylists, 2);
 	}
+	
+	@Test
+	void getRandomIndexFromAllSongsTest() {
+		PlaylistHelper playlistHelper = new PlaylistHelper();
+		Song testSongOne = new Song("Test One", "Test One", 10);
+		Song testSongTwo = new Song("Test Two", "Test Two", 10);
+		Song testSongThree = new Song("Test Three", "Test Three", 10);
+		Song testSongFour = new Song("Test Four", "Test Four", 10);
+		playlistHelper.addSongToAllSongsPlaylist(testSongOne);
+		playlistHelper.addSongToAllSongsPlaylist(testSongTwo);
+		playlistHelper.addSongToAllSongsPlaylist(testSongThree);
+		playlistHelper.addSongToAllSongsPlaylist(testSongFour);
+		int randomIndex = playlistHelper.getRandomIndexFromAllSongs();
+		assertTrue(randomIndex<=4);
+	}
+	
+	@Test
+	void getRandomSongFromAllSongsTest() {
+		PlaylistHelper playlistHelper = new PlaylistHelper();
+		Song testSongOne = new Song("Test One", "Test One", 10);
+		Song testSongTwo = new Song("Test Two", "Test Two", 10);
+		Song testSongThree = new Song("Test Three", "Test Three", 10);
+		Song testSongFour = new Song("Test Four", "Test Four", 10);
+		playlistHelper.addSongToAllSongsPlaylist(testSongOne);
+		playlistHelper.addSongToAllSongsPlaylist(testSongTwo);
+		playlistHelper.addSongToAllSongsPlaylist(testSongThree);
+		playlistHelper.addSongToAllSongsPlaylist(testSongFour);
+		Song randomSong = playlistHelper.getRandomSongFromAllSongs();
+		assertTrue(randomSong==testSongOne || randomSong==testSongTwo || randomSong==testSongThree || randomSong==testSongFour);
+	}
+	
+	@Test
+	void getSongFromAllSongsAtIndexTest() {
+		PlaylistHelper playlistHelper = new PlaylistHelper();
+		Song defaultSong =  new Song("Default", "Default", 5);
+		Song testSongOne = new Song("Test One", "Test One", 10);
+		Song testSongTwo = new Song("Test Two", "Test Two", 10);
+		Song testSongThree = new Song("Test Three", "Test Three", 10);
+		Song testSongFour = new Song("Test Four", "Test Four", 10);
+		playlistHelper.addSongToAllSongsPlaylist(testSongOne);
+		playlistHelper.addSongToAllSongsPlaylist(testSongTwo);
+		playlistHelper.addSongToAllSongsPlaylist(testSongThree);
+		playlistHelper.addSongToAllSongsPlaylist(testSongFour);
+		Song songFromAllSongs = playlistHelper.getSongFromAllSongsAtIndex(2);
+		assertEquals(songFromAllSongs,testSongThree);
+	}
+	
 }
