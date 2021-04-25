@@ -28,7 +28,7 @@ public class MusicLibrary {
 	
 	private void runMainMenu() {
 		displayMainMenu();
-		int selectedOption = this.getUserInput();
+		int selectedOption = this.getIntFromUser();
 		processMainMenu(selectedOption);
 	}
 	
@@ -89,7 +89,7 @@ public class MusicLibrary {
 	
 	public void runPlayMenu(Playlist listToPlay) {
 		displayPlayMenu();
-		int selectedOption = this.getUserInput();
+		int selectedOption = this.getIntFromUser();
 		processPlayMenu(selectedOption, listToPlay);
 	}
 	
@@ -153,7 +153,7 @@ public class MusicLibrary {
 	 */
 	public void runViewMenu(int indexToPlayOrEdit) {
 		displayViewMenu(indexToPlayOrEdit);	
-		int viewOption = this.getUserInput();
+		int viewOption = this.getIntFromUser();
 		processViewMenu(viewOption, indexToPlayOrEdit);
 	}
 	
@@ -206,7 +206,7 @@ public class MusicLibrary {
 	public void runEditMenu(int indexToPlayOrEdit) {
 		
 		displayEditMenu();
-		int editOption = this.getUserInput();
+		int editOption = this.getIntFromUser();
 		processEditMenu(editOption, indexToPlayOrEdit);
 	}
 
@@ -272,7 +272,7 @@ public class MusicLibrary {
 
 	public void runDeleteAnotherSongMenu(int playlistIndex) {
 		displayDeleteAnotherSongMenu();
-		int input = this.getUserInput();
+		int input = this.getIntFromUser();
 		processDeleteAnotherSongMenu(playlistIndex, input);
 	}
 
@@ -312,7 +312,7 @@ public class MusicLibrary {
 
 	public void runAddAnotherSongMenu(int indexOfPlaylistToAddSong) {
 		displayAddAnotherSongMenu();
-		int input = this.getUserInput();
+		int input = this.getIntFromUser();
 		processAddAnotherSongMenu(indexOfPlaylistToAddSong, input);
 	}
 
@@ -401,7 +401,7 @@ public class MusicLibrary {
 	 */
 	public void createRandomPlaylist() {
 		int length = getLengthFromUser();
-		Playlist random =  getUserInputForRandomPlaylist(length);
+		Playlist random =  getIntFromUserForRandomPlaylist(length);
 		this.playlistHelper.addPlaylist(random);
 		int indexOfPlaylist = playlistHelper.getNumberOfPlaylists()-1;
 		generateRandomPlaylist(length, indexOfPlaylist);
@@ -413,7 +413,7 @@ public class MusicLibrary {
 	 * @param length of the random playlist
 	 * @return random playlist with user specified length and title
 	 */
-	public Playlist getUserInputForRandomPlaylist(int length) {
+	public Playlist getIntFromUserForRandomPlaylist(int length) {
 		String title = getTitleFromUser();
 		Playlist random = new Playlist(title);
 		return random;
@@ -437,7 +437,7 @@ public class MusicLibrary {
 	 */
 	public int getLengthFromUser() {
 		System.out.println("How long would you like your random playlist to be?");
-		int length = keyboardIn.nextInt();
+		int length = this.getIntFromUser();
 		return length;
 	}
 	
@@ -458,22 +458,30 @@ public class MusicLibrary {
 	 */
 	private int selectPlaylist() {
 		playlistHelper.printAllPlaylists();
-		int playlistIndex = keyboardIn.nextInt();
-		this.keyboardIn.nextLine();
+		int numOfPlaylist = playlistHelper.getNumberOfPlaylists();
+		int playlistIndex = this.getIntFromUser();
+		while(playlistIndex>=numOfPlaylist) {
+			System.out.println("This isn't a valid playlist, please enter again:");
+			playlistIndex = this.getIntFromUser();
+		}
 		return playlistIndex;
 	}
 	
-	private int getUserInput() {
-
+	// might warrent a rename if we want non ints as a user input
+	private int getIntFromUser() {
+		while (!this.keyboardIn.hasNextInt()) {
+	        System.out.println("That's not a number, please enter a number again:");
+	        this.keyboardIn.next(); // this is important!
+	    }
+		
 		int input = this.keyboardIn.nextInt();
-		this.keyboardIn.nextLine();
 		return input;
 
 	}
 	
 	public int getValidUserInput() {
 		System.out.println("\nPlease input a valid option");
-		int nextInput = this.getUserInput();
+		int nextInput = this.getIntFromUser();
 		return nextInput;
 	}
 	
@@ -490,8 +498,7 @@ public class MusicLibrary {
 
 	public int getSongLengthInSecondsFromUser() {
 		System.out.println("\nEnter Song Length in Seconds: ");
-		int songLength = this.keyboardIn.nextInt();
-		this.keyboardIn.nextLine();
+		int songLength = this.getIntFromUser();
 		return songLength;
 	}
 
@@ -509,6 +516,8 @@ public class MusicLibrary {
 	
 	public Playlist getPlaylistToAddFromUser() {
 		System.out.println("\nPlease enter the name of the new playlist: ");
+		// weird bug, unsure where it is triggered from but fixed by this (refrence issue 108)
+		this.keyboardIn.nextLine();
 		String newPlaylistName = this.keyboardIn.nextLine();
 		Playlist newPlaylist = new Playlist(newPlaylistName);
 		return newPlaylist;
@@ -532,11 +541,11 @@ public class MusicLibrary {
 		System.out.println("\nPlease select a song: ");
 		playlistToGetSongFrom.displayPlaylistAndSongs();
 		
-		int indexOfSong = this.getUserInput();
+		int indexOfSong = this.getIntFromUser();
 		
 		while(indexOfSong >= playlistToGetSongFrom.getNumberOfSongs()) {
 			System.out.println("\nPlease input a valid index:");
-			indexOfSong = this.getUserInput();
+			indexOfSong = this.getIntFromUser();
 		}
 		
 		Song songToDelete = playlistToGetSongFrom.getSongAt(indexOfSong);
