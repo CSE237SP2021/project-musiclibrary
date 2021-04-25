@@ -401,7 +401,7 @@ public class MusicLibrary {
 	 */
 	public void createRandomPlaylist() {
 		int length = getLengthFromUser();
-		Playlist random =  getIntFromUserForRandomPlaylist(length);
+		Playlist random =  getUserInputForRandomPlaylist(length);
 		this.playlistHelper.addPlaylist(random);
 		int indexOfPlaylist = playlistHelper.getNumberOfPlaylists()-1;
 		generateRandomPlaylist(length, indexOfPlaylist);
@@ -413,7 +413,7 @@ public class MusicLibrary {
 	 * @param length of the random playlist
 	 * @return random playlist with user specified length and title
 	 */
-	public Playlist getIntFromUserForRandomPlaylist(int length) {
+	public Playlist getUserInputForRandomPlaylist(int length) {
 		String title = getTitleFromUser();
 		Playlist random = new Playlist(title);
 		return random;
