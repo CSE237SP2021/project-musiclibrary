@@ -303,7 +303,7 @@ public class MusicLibrary {
 	 * @param indexOfPlaylistToAddSong
 	 */
 	public void editPlaylistAddSong(int indexOfPlaylistToAddSong) {
-		
+		this.keyboardIn.nextLine();
 		Song songToAdd = getSongFromUser();
 		this.playlistHelper.addSongToPlaylistAtIndex(songToAdd, indexOfPlaylistToAddSong);
 		runAddAnotherSongMenu(indexOfPlaylistToAddSong);
