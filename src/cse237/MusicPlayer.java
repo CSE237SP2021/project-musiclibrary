@@ -14,10 +14,10 @@ public class MusicPlayer {
 	private int playlistSize;
 	private ArrayList<Song> songs;
 
+
 	
 	public MusicPlayer() {
 		
-
 	}
 	
 	
@@ -41,32 +41,77 @@ public class MusicPlayer {
 			updateTimeRemaining(0);
 			playSongs();
 			
-			//if last song in the playlist is complete, return to the Now Playing menu.
+			//if last song in the playlist is complete, ask if user wants to favorite, then return to Now Playing menu.
 			if (i == playlistSize - 1) {
-				break;
+		
+				int inputEnd = playlistEndMenuHandling(keyboardIn);
+				//back to Now Playing menu
+				if (inputEnd == 1) {
+					System.out.println("Now returning to the Now Playing menu: ");
+					break;
+				}
+				
+				//Loop last song
+				if (inputEnd == 2){
+					System.out.println("Looping the last played song: ");
+					i--;
+					continue;
+				}
+				//Start from the top
+				if (inputEnd == 3){
+					System.out.println("Starting from the top: ");
+					i = -1;
+					continue;
+				}
 			}
+	
+				//else, show user options
+				int  input = songEndMenuHandling(keyboardIn);
+				//go back to Now Playing Menu
+				if (input == 1) {
+					System.out.println("Now returning to the Now Playing menu:");
+					break;
+				}
+				
+				//loop last song
+				if(input == 2) {
+					System.out.println("Looping the last played song: ");
+					i--;
+					continue;
+				}
+				
+				//next song
+				if (input == 3) {
+					//do nothing, continue to next song
+				}
 			
-			//else, show user options
-			String input = songEndMenuHandling(keyboardIn);
-			if (input.equals("back")) {
-				break;
-			}
+			
 		}
 		
-		System.out.println("\nThe playlist has been fully listened to. Now returning to the Now Playing menu.");
 		
 		currentSongIndex = 0;
 		
 	}
 	
-	public String songEndMenuHandling(Scanner keyboardIn) {
+	public int songEndMenuHandling(Scanner keyboardIn) {
 		
-		System.out.println("The song has finished. Input 'back' to navigate back to the Now Playing menu, or 'next' to continue on to the next song.");
-		String input = keyboardIn.nextLine();
-		return input;
+		System.out.println("The song has finished. Here are your options: ");
+		System.out.println("1. Go back to the Now Playing menu");
+		System.out.println("2. Repeat the last played song");
+		System.out.println("3. Continue to the next song");
+		int inputEnd = keyboardIn.nextInt();
+		return inputEnd;
 		
-	}
+	}	
 	
+	public int playlistEndMenuHandling(Scanner keyboardIn) {
+		System.out.println("Looks like you've reached the end of this playlist. Here are your options: ");
+		System.out.println("1. Go back to the Now Playing menu");
+		System.out.println("2. Repeat the last played song");
+		System.out.println("3. Start playing from the first song in this playlist");
+		int inputPlaylistEnd = keyboardIn.nextInt();
+		return inputPlaylistEnd;
+	}
 	/**
 	 * Method for playing the current Song : Emulates playing music by printing the current song's details.
 	 */
@@ -104,7 +149,7 @@ public class MusicPlayer {
 		playSongs();
 		trackTime();
 		
-		System.out.println("\nThe random song has ended. Now returning to the Now Playing menu");
+		System.out.println("\nThe random song has ended. Now returning to the Now Playing menu.");
 		
 	}
 	
