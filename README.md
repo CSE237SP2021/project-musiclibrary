@@ -93,3 +93,21 @@ OR
 1. Open the command line / terminal
 2. Navigate to the directory this README is in
 3. Enter "./run.sh" (without quotations) in the terminal and hit enter
+
+###Iteration 3
+Completed User Stories:
+1. At the end of every song, users can now choose whether to go onto the next song or loop the last song played.
+2. At the end of every full playlist listen, users can now choose to start again from the top of the current playlist.
+3. Users can configure a new playlist to contain zero or multiple songs
+4. Improvement on handling bad inputs, so it will no longer crash the program
+5. Users can create a random playlist of any length they choose consisting of random songs from the “all songs” playlist.
+6. Minor bug fixes
+
+Does everything work?
+The program has some format restrictions: We used Scanner.nextInt() to select options from our menus, and this will not work if a non-number is given. When selecting playlists, only good input should be given (choose from the displayed indices) but if bad input is given, it will prompt the user for good input. Playing a playlist / displaying a song while being played may feel a bit awkward compared to last iteration, due to asking if user wants to continue after each song. Overall, this iteration was mostly polishing what we already had and adding some more new features. The program as a whole acts as intended.
+
+How to use the program:
+1. Use an IDE you are familiar with, OR
+2. Open the command line / terminal
+3. Navigate to the directory this README is in
+4. Enter "./run.sh" (without quotations) in the terminal and hit enter
