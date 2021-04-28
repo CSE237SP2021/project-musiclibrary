@@ -94,7 +94,7 @@ OR
 2. Navigate to the directory this README is in
 3. Enter "./run.sh" (without quotations) in the terminal and hit enter
 
-###Iteration 3
+### Iteration 3
 Completed User Stories:
 1. At the end of every song, users can now choose whether to go onto the next song or loop the last song played.
 2. At the end of every full playlist listen, users can now choose to start again from the top of the current playlist.
