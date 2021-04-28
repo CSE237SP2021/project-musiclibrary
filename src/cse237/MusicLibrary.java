@@ -370,16 +370,67 @@ public class MusicLibrary {
 	public Playlist configureNewPlaylistToAdd() {
 		
 		Playlist newPlaylist = getPlaylistToAddFromUser();
-		
-		System.out.println("\nWhat is your first song in the new playlist?");
-		Song firstSong = this.getSongFromUser();
-		
-		newPlaylist.addSong(firstSong);
-		
-		//update the "all" playlist to contain the new song
-		this.playlistHelper.addSongToAllSongsPlaylist(firstSong);
-		
+		runConfigureNewPlaylistMenu(newPlaylist);
 		return newPlaylist;
+	}
+
+	public void runConfigureNewPlaylistMenu(Playlist newPlaylist) {
+		displayConfigureNewPlaylistMenu();
+		int input = this.getIntFromUser();
+		processConfigureNewPlaylistMenu(newPlaylist, input);
+	}
+	
+	public void displayConfigureNewPlaylistMenu() {
+		System.out.println("\nWould you like to add songs to your playlsit?");
+		System.out.println("1. Yes");
+		System.out.println("2. No");
+	}
+	
+	public void processConfigureNewPlaylistMenu(Playlist newPlaylist, int input) {
+		switch(input) {
+		case 1:
+			addInitialSongs(newPlaylist);
+			break;
+		case 2:
+			System.out.println("\nThe new playlist contains 0 songs!");
+			break;
+		default:
+			int newInput = this.getValidUserInput();
+			this.processConfigureNewPlaylistMenu(newPlaylist, newInput);
+			break;
+		}
+	}
+
+	
+
+	public void addInitialSongs(Playlist initialPlaylist) {
+		
+		Song songToAdd = this.getSongFromUser();
+		initialPlaylist.addSong(songToAdd);
+		this.playlistHelper.addSongToAllSongsPlaylist(songToAdd); //update 'all songs' playlist
+		
+		addAnotherSongToInitialPlaylist(initialPlaylist);
+		
+	}
+
+	public void addAnotherSongToInitialPlaylist(Playlist initialPlaylist) {
+		this.displayAddAnotherSongMenu();
+		int input = this.getIntFromUser();
+		processAddSongsToInitalPlaylistMenu(initialPlaylist, input);
+	}
+
+	public void processAddSongsToInitalPlaylistMenu(Playlist initialPlaylist, int input) {
+		switch(input) {
+		case 1: 
+			this.addInitialSongs(initialPlaylist);
+			break;
+		case 2:
+			break;
+		default:
+			int newInput = this.getValidUserInput();
+			this.processAddSongsToInitalPlaylistMenu(initialPlaylist, newInput);
+			break;
+		}
 	}
 	
 	/**
@@ -467,7 +518,7 @@ public class MusicLibrary {
 		return playlistIndex;
 	}
 	
-	// might warrent a rename if we want non ints as a user input
+	// might warrant a rename if we want non integers as a user input
 	private int getIntFromUser() {
 		while (!this.keyboardIn.hasNextInt()) {
 	        System.out.println("That's not a number, please enter a number again:");
@@ -486,7 +537,6 @@ public class MusicLibrary {
 	}
 	
 	public Song getSongFromUser() {
-		
 		String title = getSongTitleFromUser();
 		String artist = getSongArtistFromUser();
 		int songLength = getSongLengthInSecondsFromUser();
@@ -495,24 +545,29 @@ public class MusicLibrary {
 		
 		return songToAdd;
 	}
-
+	
+	public String getSongTitleFromUser() {
+		System.out.println("\nEnter Song Title:");
+		String title = this.keyboardIn.next();
+		title = title + this.keyboardIn.nextLine();
+		return title;
+	}
+	
+	public String getSongArtistFromUser() {
+		System.out.println("\nEnter Artist:");
+		String artist = this.keyboardIn.next();
+		artist = artist + this.keyboardIn.nextLine();
+		return artist;
+	}
 	public int getSongLengthInSecondsFromUser() {
 		System.out.println("\nEnter Song Length in Seconds: ");
 		int songLength = this.getIntFromUser();
 		return songLength;
 	}
 
-	public String getSongArtistFromUser() {
-		System.out.println("\nEnter Artist:");
-		String artist = this.keyboardIn.nextLine();
-		return artist;
-	}
+	
 
-	public String getSongTitleFromUser() {
-		System.out.println("\nEnter Song Title:");
-		String title = this.keyboardIn.nextLine();
-		return title;
-	}
+
 	
 	public Playlist getPlaylistToAddFromUser() {
 		System.out.println("\nPlease enter the name of the new playlist: ");
